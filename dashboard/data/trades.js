@@ -127,7 +127,61 @@ window.TRADES_DATA = [
     "mfe_usd": "164.0",
     "mae_usd": "9.5",
     "bars_held": "24"
+  },
+  {
+    "exit_time": "2026-05-13T22:09:24",
+    "strategy_mode": "TREND",
+    "side": "SHORT",
+    "qty": "1",
+    "entry_time": "2026-05-13 14:01:00-05:00",
+    "exit_reason": "trend_ema20_exit",
+    "entry_price": "29491.0",
+    "exit_price": "29507.25",
+    "realized_points": "-16.25",
+    "realized_usd_gross": "-32.5",
+    "realized_usd_net": "-35.14",
+    "mfe_points": "9.5",
+    "mae_points": "12.0",
+    "mfe_usd": "19.0",
+    "mae_usd": "24.0",
+    "bars_held": "8"
+  },
+  {
+    "exit_time": "2026-05-13T22:31:18",
+    "strategy_mode": "RANGE",
+    "side": "SHORT",
+    "qty": "1",
+    "entry_time": "2026-05-13 14:25:00-05:00",
+    "exit_reason": "time_stop",
+    "entry_price": "29501.25",
+    "exit_price": "29527.0",
+    "realized_points": "-25.75",
+    "realized_usd_gross": "-51.5",
+    "realized_usd_net": "-54.14",
+    "mfe_points": "0.0",
+    "mae_points": "27.0",
+    "mfe_usd": "0.0",
+    "mae_usd": "54.0",
+    "bars_held": "6"
+  },
+  {
+    "exit_time": "2026-05-13T22:39:16",
+    "strategy_mode": "RANGE",
+    "side": "SHORT",
+    "qty": "1",
+    "entry_time": "2026-05-13 14:33:00-05:00",
+    "exit_reason": "time_stop",
+    "entry_price": "29516.75",
+    "exit_price": "29528.25",
+    "realized_points": "-11.5",
+    "realized_usd_gross": "-23.0",
+    "realized_usd_net": "-25.64",
+    "mfe_points": "4.0",
+    "mae_points": "11.0",
+    "mfe_usd": "8.0",
+    "mae_usd": "22.0",
+    "bars_held": "6"
   }
 ];
 
-window.LAST_UPDATED = "2026-05-13 21:33:49";
+window.LAST_UPDATED = "2026-05-13 23:00:03";

@@ -1,8 +1,8 @@
 #!/bin/bash
 # ─────────────────────────────────────────────────────────────
 # update_dashboard.sh
-# Copies the bot trade log to the dashboard and converts it
-# to a JavaScript data file so the HTML can load it locally.
+# Copies the bot trade log to the dashboard, converts it to
+# a JavaScript data file, then pushes to GitHub Pages.
 #
 # Schedule: runs automatically via launchd at 23:00 Turkey time
 # Run manually anytime: bash ~/mnq-bot/scripts/update_dashboard.sh
@@ -32,7 +32,6 @@ cp "$SOURCE" "$DEST_CSV"
 echo "[OK] Copied CSV to $DEST_CSV" >> "$LOG"
 
 # ── Convert CSV to JavaScript data file ──────────────────────
-# Uses Python3 (available on all Macs) to parse CSV → JSON
 python3 - "$DEST_CSV" "$DEST_JS" << 'PYEOF'
 import csv
 import json
@@ -46,7 +45,6 @@ with open(src, newline='', encoding='utf-8') as f:
     reader = csv.DictReader(f)
     rows = list(reader)
 
-# Clean up any whitespace in keys/values
 clean = []
 for row in rows:
     clean.append({k.strip(): v.strip() for k, v in row.items()})
@@ -64,12 +62,26 @@ with open(dst, 'w', encoding='utf-8') as f:
 print(f"[OK] Wrote {len(clean)} trades to {dst}")
 PYEOF
 
-if [ $? -eq 0 ]; then
-    echo "[OK] trades.js generated successfully" >> "$LOG"
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Dashboard update complete" >> "$LOG"
-    echo "✅ Dashboard updated — $(python3 -c "import csv; r=list(csv.DictReader(open('$SOURCE'))); print(len(r),'trades')" 2>/dev/null || echo 'see logs')"
-    echo "   Open: $DASHBOARD_DIR/index.html"
-else
+if [ $? -ne 0 ]; then
     echo "[ERROR] Python conversion failed" | tee -a "$LOG"
+    exit 1
+fi
+
+echo "[OK] trades.js generated successfully" >> "$LOG"
+
+# ── Push to GitHub Pages ─────────────────────────────────────
+cd "$DASHBOARD_DIR"
+
+git add data/trades.js data/mnq_trades.csv
+git commit -m "Dashboard update $(date '+%Y-%m-%d %H:%M')"
+git push
+
+if [ $? -eq 0 ]; then
+    echo "[OK] Pushed to GitHub Pages" >> "$LOG"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] Dashboard update complete" >> "$LOG"
+    echo "Dashboard updated and published successfully"
+    echo "View at: https://cozerdag.github.io/mnq-dashboard"
+else
+    echo "[ERROR] Git push failed" | tee -a "$LOG"
     exit 1
 fi
