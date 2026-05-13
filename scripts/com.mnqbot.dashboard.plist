@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  com.mnqbot.dashboard.plist
+  ──────────────────────────
+  macOS LaunchAgent that runs update_dashboard.sh every weekday
+  at 23:00 Turkey time (20:00 UTC) — after the afternoon session ends.
+
+  INSTALL:
+    cp ~/mnq-bot/scripts/com.mnqbot.dashboard.plist \
+       ~/Library/LaunchAgents/com.mnqbot.dashboard.plist
+
+    launchctl load ~/Library/LaunchAgents/com.mnqbot.dashboard.plist
+
+  UNINSTALL:
+    launchctl unload ~/Library/LaunchAgents/com.mnqbot.dashboard.plist
+    rm ~/Library/LaunchAgents/com.mnqbot.dashboard.plist
+
+  CHECK STATUS:
+    launchctl list | grep mnqbot
+
+  CHANGE SCHEDULE:
+    Edit <key>Hour</key> and <key>Minute</key> below (values are in LOCAL time).
+    Then unload + reload the plist.
+-->
+<plist version="1.0">
+<dict>
+
+    <!-- Unique identifier for this agent -->
+    <key>Label</key>
+    <string>com.mnqbot.dashboard</string>
+
+    <!-- Script to run -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>/Users/cozerdag/mnq-bot/scripts/update_dashboard.sh</string>
+    </array>
+
+    <!--
+      Schedule: 23:00 Turkey time, Monday–Friday
+      Turkey is UTC+3, afternoon session ends 15:45 ET = 22:45 Turkey.
+      We run at 23:00 to give a 15-minute buffer.
+
+      Weekday values: 1=Monday, 2=Tuesday, 3=Wednesday, 4=Thursday, 5=Friday
+    -->
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Weekday</key><integer>1</integer>
+            <key>Hour</key><integer>23</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>2</integer>
+            <key>Hour</key><integer>23</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>3</integer>
+            <key>Hour</key><integer>23</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>4</integer>
+            <key>Hour</key><integer>23</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+        <dict>
+            <key>Weekday</key><integer>5</integer>
+            <key>Hour</key><integer>23</integer>
+            <key>Minute</key><integer>0</integer>
+        </dict>
+    </array>
+
+    <!-- Log output -->
+    <key>StandardOutPath</key>
+    <string>/Users/cozerdag/mnq-bot/logs/dashboard_update.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/cozerdag/mnq-bot/logs/dashboard_update_error.log</string>
+
+    <!-- Run even if the scheduled time was missed (e.g. Mac was asleep) -->
+    <key>RunAtLoad</key>
+    <false/>
+
+</dict>
+</plist>

@@ -1,0 +1,9 @@
+.env
+logs/
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+venv/
+bot_state.json
+mnq_trades_log.csv
