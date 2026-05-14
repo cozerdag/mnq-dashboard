@@ -19,7 +19,43 @@ window.TRADES_DATA = [
     "mfe_usd": "10.5",
     "mae_usd": "49.0",
     "bars_held": "6"
+  },
+  {
+    "exit_time": "2026-05-14T17:52:45",
+    "strategy_mode": "TREND",
+    "side": "LONG",
+    "qty": "1",
+    "entry_time": "2026-05-14 09:49:00-05:00",
+    "exit_reason": "trend_trailing_tp",
+    "entry_price": "29700.75",
+    "exit_price": "29717.0",
+    "realized_points": "16.25",
+    "realized_usd_gross": "32.5",
+    "realized_usd_net": "29.86",
+    "mfe_points": "26.0",
+    "mae_points": "0.0",
+    "mfe_usd": "52.0",
+    "mae_usd": "0.0",
+    "bars_held": "3"
+  },
+  {
+    "exit_time": "2026-05-14T17:59:24",
+    "strategy_mode": "TREND",
+    "side": "LONG",
+    "qty": "1",
+    "entry_time": "2026-05-14 09:53:00-05:00",
+    "exit_reason": "trend_ema20_exit",
+    "entry_price": "29716.75",
+    "exit_price": "29669.25",
+    "realized_points": "-47.5",
+    "realized_usd_gross": "-95.0",
+    "realized_usd_net": "-97.64",
+    "mfe_points": "0.0",
+    "mae_points": "42.0",
+    "mfe_usd": "0.0",
+    "mae_usd": "84.0",
+    "bars_held": "6"
   }
 ];
 
-window.LAST_UPDATED = "2026-05-14 17:51:39";
+window.LAST_UPDATED = "2026-05-14 18:02:30";
