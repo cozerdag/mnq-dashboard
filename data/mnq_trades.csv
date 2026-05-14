@@ -1,0 +1,4 @@
+exit_time,strategy_mode,side,qty,entry_time,exit_reason,entry_price,exit_price,realized_points,realized_usd_gross,realized_usd_net,mfe_points,mae_points,mfe_usd,mae_usd,bars_held
+2026-05-14T17:34:20,RANGE,SHORT,1,2026-05-14 09:28:00-05:00,time_stop,29604.75,29618.5,-13.75,-27.5,-30.14,5.25,24.5,10.5,49.0,6
+2026-05-14T17:52:45,TREND,LONG,1,2026-05-14 09:49:00-05:00,trend_trailing_tp,29700.75,29717.0,16.25,32.5,29.86,26.0,0.0,52.0,0.0,3
+2026-05-14T17:59:24,TREND,LONG,1,2026-05-14 09:53:00-05:00,trend_ema20_exit,29716.75,29669.25,-47.5,-95.0,-97.64,0.0,42.0,0.0,84.0,6
