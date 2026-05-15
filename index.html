@@ -579,11 +579,23 @@
     </div>`;
   }
 
+  // Daily win rate
+  const dailyPnLs    = days.map(d => trades.filter(t => t.exit_time.slice(0,10) === d)
+                          .reduce((s,t) => s + (+t.realized_usd_net), 0));
+  const profitDays   = dailyPnLs.filter(p => p > 0).length;
+  const lossDays     = dailyPnLs.filter(p => p <= 0).length;
+  const dailyWinRate = (profitDays / days.length * 100).toFixed(1);
+  const bestDay      = Math.max(...dailyPnLs);
+  const worstDay     = Math.min(...dailyPnLs);
+
   statsRow.innerHTML =
     statCard('NET P&L', fmtUSD(totalNet), `${fmtPts(totalPts)} pts gross ${fmtUSD(totalGross)}`,
       totalNet >= 0 ? 'green' : 'red', totalNet >= 0 ? 'pos' : 'neg') +
     statCard('WIN RATE', winRate + '%', `${wins.length}W / ${losses.length}L of ${trades.length} trades`,
       'blue') +
+    statCard('DAILY WIN RATE', dailyWinRate + '%',
+      `${profitDays} green · ${lossDays} red · best ${fmtUSD(bestDay)} · worst ${fmtUSD(worstDay)}`,
+      profitDays >= lossDays ? 'green' : 'red', profitDays >= lossDays ? 'pos' : 'neg') +
     statCard('PROFIT FACTOR', profitFactor, `Avg win ${fmtUSD(avgWin)} · Avg loss ${fmtUSD(avgLoss)}`) +
     statCard('BEST TRADE', fmtUSD(+bestTrade.realized_usd_net),
       bestTrade.side + ' · ' + fmtDate(bestTrade.exit_time), 'green', 'pos') +
