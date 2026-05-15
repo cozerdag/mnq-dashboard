@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MNQ Bot — Trading Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg:       #0d1117;
+    --card:     #161b22;
+    --border:   #21262d;
+    --border2:  #30363d;
+    --gold:     #e6a817;
+    --gold-dim: #8a6410;
+    --green:    #3fb950;
+    --red:      #f85149;
+    --blue:     #58a6ff;
+    --purple:   #bc8cff;
+    --text:     #e6edf3;
+    --muted:    #8b949e;
+    --muted2:   #484f58;
+    --ff-head:  'Barlow Condensed', sans-serif;
+    --ff-mono:  'JetBrains Mono', monospace;
+    --ff-body:  'Sora', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--ff-body);
+    font-size: 13px;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--card);
+    border-bottom: 1px solid var(--border2);
+    padding: 14px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .logo {
+    font-family: var(--ff-head);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--gold);
+  }
+  .logo span { color: var(--muted); font-weight: 400; }
+  .badge {
+    background: var(--gold-dim);
+    color: var(--gold);
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+  }
+  .header-right {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+  }
+  .header-right .updated { color: var(--green); }
+
+  /* ── MAIN ── */
+  .main { padding: 24px 28px; max-width: 1400px; margin: 0 auto; }
+
+  /* ── STAT CARDS ── */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .2s;
+  }
+  .stat-card:hover { border-color: var(--border2); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    opacity: .4;
+  }
+  .stat-card.green::before { background: var(--green); opacity: .5; }
+  .stat-card.red::before   { background: var(--red); opacity: .5; }
+  .stat-card.blue::before  { background: var(--blue); opacity: .5; }
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .stat-value {
+    font-family: var(--ff-mono);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--text);
+  }
+  .stat-value.pos { color: var(--green); }
+  .stat-value.neg { color: var(--red); }
+  .stat-sub {
+    font-family: var(--ff-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 5px;
+  }
+
+  /* ── CHARTS GRID ── */
+  .charts-row {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .charts-row.full { grid-template-columns: 1fr; }
+  .charts-row.split-7-3 { grid-template-columns: 7fr 3fr; }
+  .charts-row.split-2 { grid-template-columns: 1fr 1fr; }
+  .charts-row.split-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  .chart-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+  }
+  .chart-title {
+    font-family: var(--ff-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .chart-title .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .chart-title .dot.green { background: var(--green); }
+  .chart-title .dot.blue  { background: var(--blue); }
+  .chart-title .dot.red   { background: var(--red); }
+  .chart-title .dot.purple{ background: var(--purple); }
+
+  .chart-wrap { position: relative; }
+  .chart-wrap canvas { max-height: 220px; }
+  .chart-wrap.tall canvas { max-height: 280px; }
+  .chart-wrap.donut canvas { max-height: 200px; }
+
+  /* ── TRAIL EFFICIENCY ── */
+  .efficiency-bars { display: flex; flex-direction: column; gap: 10px; }
+  .eff-row { display: grid; grid-template-columns: 110px 1fr 55px; align-items: center; gap: 10px; }
+  .eff-label { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); }
+  .eff-track {
+    background: var(--border);
+    border-radius: 3px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .eff-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--green));
+    transition: width .8s ease;
+  }
+  .eff-pct {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    color: var(--text);
+    text-align: right;
+  }
+
+  /* ── TRADE TABLE ── */
+  .table-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .table-header {
+    padding: 16px 20px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .table-header .chart-title { margin-bottom: 0; }
+  .table-count {
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead th {
+    font-family: var(--ff-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+  }
+  thead th:hover { color: var(--text); }
+  thead th.sorted { color: var(--gold); }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background .1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: rgba(255,255,255,.025); }
+  tbody td {
+    padding: 9px 14px;
+    font-family: var(--ff-mono);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .side-long  { color: var(--green); font-weight: 600; }
+  .side-short { color: var(--red);   font-weight: 600; }
+  .pnl-pos { color: var(--green); }
+  .pnl-neg { color: var(--red); }
+  .pill {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .5px;
+  }
+  .pill-trend  { background: rgba(88,166,255,.15); color: var(--blue); }
+  .pill-range  { background: rgba(188,140,255,.15); color: var(--purple); }
+  .pill-trail  { background: rgba(63,185,80,.15); color: var(--green); }
+  .pill-ema    { background: rgba(248,81,73,.15); color: var(--red); }
+  .pill-dd     { background: rgba(248,81,73,.2); color: var(--red); }
+  .pill-time   { background: rgba(139,148,158,.15); color: var(--muted); }
+
+  /* ── NO DATA ── */
+  .no-data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    text-align: center;
+  }
+  .no-data-icon {
+    font-size: 48px;
+    opacity: .3;
+  }
+  .no-data h2 {
+    font-family: var(--ff-head);
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--muted);
+  }
+  .no-data p {
+    color: var(--muted2);
+    max-width: 420px;
+    line-height: 1.6;
+  }
+  .no-data code {
+    font-family: var(--ff-mono);
+    background: var(--border);
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--gold);
+    font-size: 12px;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted2); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="logo">MNQ <span>BOT</span></div>
+    <div class="badge">PAPER TRADING</div>
+  </div>
+  <div class="header-right">
+    <div>Micro Nasdaq-100 · CME · 1 Contract</div>
+    <div class="updated" id="lastUpdated">—</div>
+  </div>
+</div>
+
+<div class="main" id="main">
+  <div class="no-data" id="noData">
+    <div class="no-data-icon">📊</div>
+    <h2>NO DATA LOADED</h2>
+    <p>The dashboard data file was not found. Run the update script first:</p>
+    <p><code>bash ~/mnq-bot/scripts/update_dashboard.sh</code></p>
+    <p style="margin-top:8px">Then open this file again.</p>
+  </div>
+</div>
+
+<!-- Data file injected by update_dashboard.sh -->
+<script src="data/trades.js"></script>
+
+<script>
+(function() {
+
+  // ── HELPERS ──────────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  const fmt = (n, dec=2) => n == null ? '—' : (n >= 0 ? '+' : '') + n.toFixed(dec);
+  const fmtPts = n => n == null ? '—' : (n >= 0 ? '+' : '') + n.toFixed(2);
+  const fmtUSD = n => n == null ? '—' : (n >= 0 ? '+$' : '-$') + Math.abs(n).toFixed(2);
+  const fmtDate = s => s ? s.slice(0, 16).replace('T', ' ') : '—';
+  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+
+  function pillClass(reason) {
+    if (!reason) return '';
+    if (reason.includes('trailing')) return 'pill pill-trail';
+    if (reason.includes('ema20'))    return 'pill pill-ema';
+    if (reason.includes('dd'))       return 'pill pill-dd';
+    if (reason.includes('time'))     return 'pill pill-time';
+    if (reason.includes('macd'))     return 'pill pill-ema';
+    return 'pill';
+  }
+
+  const CHART_DEFAULTS = {
+    font: { family: "'JetBrains Mono', monospace", size: 11 },
+    color: '#8b949e',
+  };
+  Chart.defaults.font = CHART_DEFAULTS.font;
+  Chart.defaults.color = CHART_DEFAULTS.color;
+
+  // ── CHECK DATA ───────────────────────────────────────────────────
+  if (typeof window.TRADES_DATA === 'undefined') {
+    return; // show no-data state
+  }
+
+  $('noData').style.display = 'none';
+
+  // Update timestamp
+  if (window.LAST_UPDATED) {
+    $('lastUpdated').textContent = 'Last updated: ' + window.LAST_UPDATED;
+  }
+
+  const trades = window.TRADES_DATA;
+  if (!trades || trades.length === 0) {
+    $('noData').style.display = 'flex';
+    $('noData').querySelector('h2').textContent = 'NO TRADES YET';
+    $('noData').querySelector('p').textContent = 'No trades found in the log file. Run the bot first.';
+    return;
+  }
+
+  // ── COMPUTE STATS ───────────────────────────────────────────────
+  const wins    = trades.filter(t => +t.realized_usd_net > 0);
+  const losses  = trades.filter(t => +t.realized_usd_net <= 0);
+  const winRate = (wins.length / trades.length * 100).toFixed(1);
+
+  const totalNet  = trades.reduce((s,t) => s + (+t.realized_usd_net), 0);
+  const totalGross= trades.reduce((s,t) => s + (+t.realized_usd_gross), 0);
+  const totalPts  = trades.reduce((s,t) => s + (+t.realized_points), 0);
+
+  const avgWin  = wins.length  ? wins.reduce((s,t)  => s + (+t.realized_usd_net), 0) / wins.length  : 0;
+  const avgLoss = losses.length? losses.reduce((s,t) => s + (+t.realized_usd_net), 0) / losses.length: 0;
+
+  const sumWins   = wins.reduce((s,t) => s + (+t.realized_usd_net), 0);
+  const sumLosses = Math.abs(losses.reduce((s,t) => s + (+t.realized_usd_net), 0));
+  const profitFactor = sumLosses > 0 ? (sumWins / sumLosses).toFixed(2) : '∞';
+
+  const bestTrade  = trades.reduce((b,t) => (+t.realized_usd_net) > (+b.realized_usd_net) ? t : b, trades[0]);
+  const worstTrade = trades.reduce((w,t) => (+t.realized_usd_net) < (+w.realized_usd_net) ? t : w, trades[0]);
+
+  const avgBars = (trades.reduce((s,t) => s + (+t.bars_held), 0) / trades.length).toFixed(1);
+
+  // Daily P&L
+  const byDay = {};
+  trades.forEach(t => {
+    const day = t.exit_time.slice(0, 10);
+    byDay[day] = (byDay[day] || 0) + (+t.realized_usd_net);
+  });
+  const days   = Object.keys(byDay).sort();
+  const dayPnL = days.map(d => byDay[d]);
+
+  // Cumulative P&L
+  let cumPnL = [], running = 0;
+  trades.slice().sort((a,b) => a.exit_time.localeCompare(b.exit_time))
+    .forEach(t => { running += +t.realized_usd_net; cumPnL.push(+running.toFixed(2)); });
+
+  // Exit reason breakdown
+  const byReason = {};
+  trades.forEach(t => {
+    const r = t.exit_reason || 'unknown';
+    if (!byReason[r]) byReason[r] = { count: 0, pnl: 0 };
+    byReason[r].count++;
+    byReason[r].pnl += +t.realized_usd_net;
+  });
+
+  // Strategy breakdown
+  const byMode = {};
+  trades.forEach(t => {
+    const m = t.strategy_mode || 'UNKNOWN';
+    if (!byMode[m]) byMode[m] = { count: 0, wins: 0, pnl: 0 };
+    byMode[m].count++;
+    byMode[m].pnl += +t.realized_usd_net;
+    if (+t.realized_usd_net > 0) byMode[m].wins++;
+  });
+
+  // Trailing TP efficiency (how much of MFE was captured)
+  const trailTrades = trades.filter(t =>
+    t.exit_reason && t.exit_reason.includes('trailing') && +t.mfe_points > 0
+  );
+  const avgCapture = trailTrades.length
+    ? trailTrades.reduce((s,t) => s + clamp(+t.realized_points / +t.mfe_points, 0, 1), 0) / trailTrades.length * 100
+    : null;
+
+  // ── BUILD DOM ────────────────────────────────────────────────────
+  const main = $('main');
+  main.innerHTML = '';
+
+  // ── STAT CARDS ──────────────────────────────────────────────────
+  const statsRow = document.createElement('div');
+  statsRow.className = 'stats-row';
+
+  function statCard(label, value, sub, cls='', valClass='') {
+    return `<div class="stat-card ${cls}">
+      <div class="stat-label">${label}</div>
+      <div class="stat-value ${valClass}">${value}</div>
+      ${sub ? `<div class="stat-sub">${sub}</div>` : ''}
+    </div>`;
+  }
+
+  statsRow.innerHTML =
+    statCard('NET P&L', fmtUSD(totalNet), `${fmtPts(totalPts)} pts gross ${fmtUSD(totalGross)}`,
+      totalNet >= 0 ? 'green' : 'red', totalNet >= 0 ? 'pos' : 'neg') +
+    statCard('WIN RATE', winRate + '%', `${wins.length}W / ${losses.length}L of ${trades.length} trades`,
+      'blue') +
+    statCard('PROFIT FACTOR', profitFactor, `Avg win ${fmtUSD(avgWin)} · Avg loss ${fmtUSD(avgLoss)}`) +
+    statCard('BEST TRADE', fmtUSD(+bestTrade.realized_usd_net),
+      bestTrade.side + ' · ' + fmtDate(bestTrade.exit_time), 'green', 'pos') +
+    statCard('WORST TRADE', fmtUSD(+worstTrade.realized_usd_net),
+      worstTrade.side + ' · ' + fmtDate(worstTrade.exit_time), 'red', 'neg') +
+    statCard('AVG HOLD', avgBars + ' bars', `${trades.length} trades · ${days.length} days`);
+
+  main.appendChild(statsRow);
+
+  // ── CUM P&L CHART ────────────────────────────────────────────────
+  const cumRow = document.createElement('div');
+  cumRow.className = 'charts-row full';
+  cumRow.innerHTML = `<div class="chart-card">
+    <div class="chart-title"><span class="dot ${totalNet>=0?'green':'red'}"></span>CUMULATIVE NET P&L</div>
+    <div class="chart-wrap tall"><canvas id="cumChart"></canvas></div>
+  </div>`;
+  main.appendChild(cumRow);
+
+  // ── DAILY + WIN/LOSS ROW ─────────────────────────────────────────
+  const row2 = document.createElement('div');
+  row2.className = 'charts-row split-7-3';
+  row2.innerHTML = `
+    <div class="chart-card">
+      <div class="chart-title"><span class="dot blue"></span>DAILY P&L</div>
+      <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title"><span class="dot"></span>WIN / LOSS</div>
+      <div class="chart-wrap donut"><canvas id="donutChart"></canvas></div>
+    </div>`;
+  main.appendChild(row2);
+
+  // ── EXIT REASON + TRAIL EFFICIENCY ──────────────────────────────
+  const row3 = document.createElement('div');
+  row3.className = 'charts-row split-2';
+  const trailHTML = trailTrades.length ? buildTrailEfficiency(trailTrades) : '<p style="color:var(--muted);font-size:12px">No trailing TP trades yet.</p>';
+  row3.innerHTML = `
+    <div class="chart-card">
+      <div class="chart-title"><span class="dot purple"></span>EXIT REASON BREAKDOWN</div>
+      <div class="chart-wrap"><canvas id="reasonChart"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title"><span class="dot blue"></span>TRAILING TP EFFICIENCY</div>
+      <div style="margin-top:8px">${trailHTML}</div>
+      ${avgCapture ? `<div style="margin-top:16px;font-family:var(--ff-mono);font-size:11px;color:var(--muted)">Average capture: <span style="color:var(--text)">${avgCapture.toFixed(1)}% of MFE</span></div>` : ''}
+    </div>`;
+  main.appendChild(row3);
+
+  // ── TRADE TABLE ──────────────────────────────────────────────────
+  const tableCard = document.createElement('div');
+  tableCard.className = 'table-card';
+  tableCard.innerHTML = `
+    <div class="table-header">
+      <div class="chart-title" style="margin-bottom:0"><span class="dot"></span>ALL TRADES</div>
+      <div class="table-count">${trades.length} records</div>
+    </div>
+    <div class="table-wrap">
+      <table id="tradesTable">
+        <thead>
+          <tr>
+            <th data-col="exit_time">DATE/TIME</th>
+            <th data-col="side">SIDE</th>
+            <th data-col="strategy_mode">MODE</th>
+            <th data-col="exit_reason">EXIT REASON</th>
+            <th data-col="entry_price">ENTRY</th>
+            <th data-col="exit_price">EXIT</th>
+            <th data-col="realized_points">PTS</th>
+            <th data-col="realized_usd_net">NET P&L</th>
+            <th data-col="mfe_points">MFE</th>
+            <th data-col="mae_points">MAE</th>
+            <th data-col="bars_held">BARS</th>
+          </tr>
+        </thead>
+        <tbody id="tradesTbody"></tbody>
+      </table>
+    </div>`;
+  main.appendChild(tableCard);
+
+  // ── RENDER TABLE ─────────────────────────────────────────────────
+  let sortCol = 'exit_time', sortAsc = false;
+  function renderTable() {
+    const sorted = [...trades].sort((a, b) => {
+      let va = a[sortCol], vb = b[sortCol];
+      const numCols = ['entry_price','exit_price','realized_points','realized_usd_net','mfe_points','mae_points','bars_held','realized_usd_gross'];
+      if (numCols.includes(sortCol)) { va = +va; vb = +vb; }
+      if (va < vb) return sortAsc ? -1 : 1;
+      if (va > vb) return sortAsc ? 1 : -1;
+      return 0;
+    });
+    const tbody = $('tradesTbody');
+    tbody.innerHTML = sorted.map(t => {
+      const net = +t.realized_usd_net;
+      const pts = +t.realized_points;
+      return `<tr>
+        <td>${fmtDate(t.exit_time)}</td>
+        <td class="${t.side==='LONG'?'side-long':'side-short'}">${t.side}</td>
+        <td><span class="pill ${t.strategy_mode==='TREND'?'pill-trend':'pill-range'}">${t.strategy_mode}</span></td>
+        <td><span class="${pillClass(t.exit_reason)}">${t.exit_reason||'—'}</span></td>
+        <td>${(+t.entry_price).toFixed(2)}</td>
+        <td>${(+t.exit_price).toFixed(2)}</td>
+        <td class="${pts>=0?'pnl-pos':'pnl-neg'}">${fmtPts(pts)}</td>
+        <td class="${net>=0?'pnl-pos':'pnl-neg'}">${fmtUSD(net)}</td>
+        <td style="color:var(--blue)">${(+t.mfe_points).toFixed(2)}</td>
+        <td style="color:var(--red)">${(+t.mae_points).toFixed(2)}</td>
+        <td>${t.bars_held}</td>
+      </tr>`;
+    }).join('');
+  }
+  renderTable();
+
+  // Sort on header click
+  document.querySelectorAll('#tradesTable thead th').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) sortAsc = !sortAsc;
+      else { sortCol = col; sortAsc = false; }
+      document.querySelectorAll('#tradesTable thead th').forEach(h => h.classList.remove('sorted'));
+      th.classList.add('sorted');
+      renderTable();
+    });
+  });
+
+  // ── DRAW CHARTS ──────────────────────────────────────────────────
+  const gridColor = '#21262d';
+
+  // Cumulative P&L
+  new Chart($('cumChart'), {
+    type: 'line',
+    data: {
+      labels: trades.slice().sort((a,b)=>a.exit_time.localeCompare(b.exit_time)).map((_,i) => i+1),
+      datasets: [{
+        data: cumPnL,
+        borderColor: totalNet >= 0 ? '#3fb950' : '#f85149',
+        backgroundColor: ctx => {
+          const g = ctx.chart.ctx.createLinearGradient(0,0,0,280);
+          g.addColorStop(0, totalNet>=0 ? 'rgba(63,185,80,.25)' : 'rgba(248,81,73,.25)');
+          g.addColorStop(1, 'rgba(0,0,0,0)');
+          return g;
+        },
+        fill: true,
+        tension: .35,
+        pointRadius: cumPnL.length <= 30 ? 4 : 0,
+        pointHoverRadius: 5,
+        borderWidth: 2,
+        pointBackgroundColor: totalNet>=0 ? '#3fb950' : '#f85149',
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#161b22',
+          borderColor: '#30363d',
+          borderWidth: 1,
+          callbacks: {
+            label: ctx => ' Net P&L: ' + fmtUSD(ctx.parsed.y)
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: gridColor }, ticks: { maxTicksLimit: 12 } },
+        y: {
+          grid: { color: gridColor },
+          ticks: { callback: v => '$' + v.toFixed(0) }
+        }
+      }
+    }
+  });
+
+  // Daily P&L
+  new Chart($('dailyChart'), {
+    type: 'bar',
+    data: {
+      labels: days,
+      datasets: [{
+        data: dayPnL,
+        backgroundColor: dayPnL.map(v => v >= 0 ? 'rgba(63,185,80,.7)' : 'rgba(248,81,73,.7)'),
+        borderColor:      dayPnL.map(v => v >= 0 ? '#3fb950' : '#f85149'),
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+          callbacks: { label: ctx => ' ' + fmtUSD(ctx.parsed.y) }
+        }
+      },
+      scales: {
+        x: { grid: { color: gridColor } },
+        y: { grid: { color: gridColor }, ticks: { callback: v => '$' + v.toFixed(0) } }
+      }
+    }
+  });
+
+  // Win/Loss donut
+  new Chart($('donutChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Wins', 'Losses'],
+      datasets: [{
+        data: [wins.length, losses.length],
+        backgroundColor: ['rgba(63,185,80,.8)', 'rgba(248,81,73,.7)'],
+        borderColor: ['#3fb950','#f85149'],
+        borderWidth: 1.5,
+        hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      cutout: '65%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 10 } },
+        tooltip: {
+          backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+          callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + ' (' + (ctx.parsed/trades.length*100).toFixed(0) + '%)' }
+        }
+      }
+    }
+  });
+
+  // Exit reason chart
+  const reasons = Object.keys(byReason);
+  new Chart($('reasonChart'), {
+    type: 'bar',
+    data: {
+      labels: reasons,
+      datasets: [
+        {
+          label: 'Count',
+          data: reasons.map(r => byReason[r].count),
+          backgroundColor: 'rgba(88,166,255,.6)',
+          borderColor: '#58a6ff',
+          borderWidth: 1,
+          borderRadius: 4,
+          yAxisID: 'y',
+        },
+        {
+          label: 'Net P&L ($)',
+          data: reasons.map(r => +byReason[r].pnl.toFixed(2)),
+          backgroundColor: reasons.map(r => byReason[r].pnl >= 0 ? 'rgba(63,185,80,.5)' : 'rgba(248,81,73,.5)'),
+          borderColor: reasons.map(r => byReason[r].pnl >= 0 ? '#3fb950' : '#f85149'),
+          borderWidth: 1,
+          borderRadius: 4,
+          yAxisID: 'y2',
+          type: 'line',
+          pointRadius: 5,
+          tension: 0,
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 10 } },
+        tooltip: { backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1 }
+      },
+      scales: {
+        x: { grid: { color: gridColor } },
+        y: { grid: { color: gridColor }, position: 'left', ticks: { stepSize: 1 } },
+        y2: { grid: { display: false }, position: 'right', ticks: { callback: v => '$' + v.toFixed(0) } }
+      }
+    }
+  });
+
+  // ── TRAIL EFFICIENCY BARS ────────────────────────────────────────
+  function buildTrailEfficiency(tTrades) {
+    if (!tTrades.length) return '';
+    // Group by trade index, show individual captures
+    const items = tTrades.map((t, i) => {
+      const cap = clamp(+t.realized_points / +t.mfe_points * 100, 0, 100);
+      const label = fmtDate(t.exit_time).slice(5, 16);
+      return `<div class="eff-row">
+        <div class="eff-label">${label}</div>
+        <div class="eff-track"><div class="eff-fill" style="width:${cap.toFixed(0)}%"></div></div>
+        <div class="eff-pct">${cap.toFixed(0)}%</div>
+      </div>`;
+    });
+    return `<div class="efficiency-bars">${items.join('')}</div>`;
+  }
+
+})();
+</script>
+</body>
+</html>
