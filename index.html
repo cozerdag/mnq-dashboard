@@ -593,9 +593,6 @@
       totalNet >= 0 ? 'green' : 'red', totalNet >= 0 ? 'pos' : 'neg') +
     statCard('WIN RATE', winRate + '%', `${wins.length}W / ${losses.length}L of ${trades.length} trades`,
       'blue') +
-    statCard('DAILY WIN RATE', dailyWinRate + '%',
-      `${profitDays} green · ${lossDays} red · best ${fmtUSD(bestDay)} · worst ${fmtUSD(worstDay)}`,
-      profitDays >= lossDays ? 'green' : 'red', profitDays >= lossDays ? 'pos' : 'neg') +
     statCard('PROFIT FACTOR', profitFactor, `Avg win ${fmtUSD(avgWin)} · Avg loss ${fmtUSD(avgLoss)}`) +
     statCard('BEST TRADE', fmtUSD(+bestTrade.realized_usd_net),
       bestTrade.side + ' · ' + fmtDate(bestTrade.exit_time), 'green', 'pos') +
@@ -627,6 +624,16 @@
       <div class="chart-wrap donut"><canvas id="donutChart"></canvas></div>
     </div>`;
   main.appendChild(row2);
+
+  // ── DAILY WIN RATE CHART ─────────────────────────────────────────
+  const row2b = document.createElement('div');
+  row2b.className = 'charts-row full';
+  row2b.innerHTML = `
+    <div class="chart-card">
+      <div class="chart-title"><span class="dot green"></span>WIN RATE PER DAY</div>
+      <div class="chart-wrap"><canvas id="dailyWinRateChart"></canvas></div>
+    </div>`;
+  main.appendChild(row2b);
 
   // ── EXIT REASON + TRAIL EFFICIENCY ──────────────────────────────
   const row3 = document.createElement('div');
@@ -835,6 +842,62 @@
       scales: {
         x: { grid: { color: gridColor } },
         y: { grid: { color: gridColor }, ticks: { callback: v => '$' + v.toFixed(0) } }
+      }
+    }
+  });
+
+  // Daily win rate chart
+  const dayWinRates = days.map(d => {
+    const dt = trades.filter(t => t.exit_time.slice(0,10) === d);
+    const w  = dt.filter(t => +t.realized_usd_net > 0).length;
+    return +(w / dt.length * 100).toFixed(1);
+  });
+
+  new Chart($('dailyWinRateChart'), {
+    type: 'bar',
+    data: {
+      labels: days,
+      datasets: [{
+        data: dayWinRates,
+        backgroundColor: dayWinRates.map(v => v >= 50 ? 'rgba(63,185,80,.7)' : 'rgba(248,81,73,.7)'),
+        borderColor:      dayWinRates.map(v => v >= 50 ? '#3fb950' : '#f85149'),
+        borderWidth: 1,
+        borderRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+          callbacks: {
+            label: ctx => {
+              const d   = days[ctx.dataIndex];
+              const dt  = trades.filter(t => t.exit_time.slice(0,10) === d);
+              const w   = dt.filter(t => +t.realized_usd_net > 0).length;
+              return ` ${ctx.parsed.y}%  (${w}W / ${dt.length - w}L of ${dt.length})`;
+            }
+          }
+        },
+        annotation: {
+          annotations: {
+            line50: {
+              type: 'line', yMin: 50, yMax: 50,
+              borderColor: 'rgba(255,255,255,.25)', borderWidth: 1, borderDash: [4, 4],
+              label: { content: '50%', display: true, position: 'end',
+                backgroundColor: 'transparent', color: 'rgba(255,255,255,.4)', font: { size: 10 } }
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: gridColor } },
+        y: {
+          grid: { color: gridColor },
+          min: 0, max: 100,
+          ticks: { callback: v => v + '%', stepSize: 25 }
+        }
       }
     }
   });
