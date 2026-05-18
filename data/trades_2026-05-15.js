@@ -19,7 +19,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "12.25",
     "mfe_usd": "191.0",
     "mae_usd": "24.5",
-    "bars_held": "7"
+    "bars_held": "7",
+    "atr_at_entry": "58.8587"
   },
   {
     "exit_time": "2026-05-15T17:27:21",
@@ -37,7 +38,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "20.0",
     "mfe_usd": "287.5",
     "mae_usd": "40.0",
-    "bars_held": "18"
+    "bars_held": "18",
+    "atr_at_entry": "71.0993"
   },
   {
     "exit_time": "2026-05-15T18:04:20",
@@ -55,7 +57,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "47.75",
     "mfe_usd": "0.0",
     "mae_usd": "95.5",
-    "bars_held": "6"
+    "bars_held": "6",
+    "atr_at_entry": "66.3456"
   },
   {
     "exit_time": "2026-05-15T18:16:21",
@@ -73,7 +76,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "53.75",
     "mfe_usd": "0.0",
     "mae_usd": "107.5",
-    "bars_held": "6"
+    "bars_held": "6",
+    "atr_at_entry": "66.9052"
   },
   {
     "exit_time": "2026-05-15T20:24:17",
@@ -91,7 +95,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "39.25",
     "mfe_usd": "1.0",
     "mae_usd": "78.5",
-    "bars_held": "6"
+    "bars_held": "6",
+    "atr_at_entry": "43.5859"
   },
   {
     "exit_time": "2026-05-15T20:40:46",
@@ -109,7 +114,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "0.0",
     "mfe_usd": "36.5",
     "mae_usd": "0.0",
-    "bars_held": "2"
+    "bars_held": "2",
+    "atr_at_entry": "40.2395"
   },
   {
     "exit_time": "2026-05-15T21:08:49",
@@ -127,7 +133,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "7.5",
     "mfe_usd": "49.0",
     "mae_usd": "15.0",
-    "bars_held": "8"
+    "bars_held": "8",
+    "atr_at_entry": "35.7948"
   },
   {
     "exit_time": "2026-05-15T21:16:24",
@@ -145,7 +152,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "23.5",
     "mfe_usd": "13.0",
     "mae_usd": "47.0",
-    "bars_held": "8"
+    "bars_held": "8",
+    "atr_at_entry": "34.1751"
   },
   {
     "exit_time": "2026-05-15T21:39:10",
@@ -163,7 +171,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "4.75",
     "mfe_usd": "20.0",
     "mae_usd": "9.5",
-    "bars_held": "2"
+    "bars_held": "2",
+    "atr_at_entry": "42.6866"
   },
   {
     "exit_time": "2026-05-15T22:18:58",
@@ -181,7 +190,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "0.0",
     "mfe_usd": "62.5",
     "mae_usd": "0.0",
-    "bars_held": "4"
+    "bars_held": "4",
+    "atr_at_entry": "40.4983"
   },
   {
     "exit_time": "2026-05-15T22:21:45",
@@ -199,7 +209,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "0.0",
     "mfe_usd": "53.0",
     "mae_usd": "0.0",
-    "bars_held": "2"
+    "bars_held": "2",
+    "atr_at_entry": "40.0341"
   },
   {
     "exit_time": "2026-05-15T22:26:12",
@@ -217,7 +228,8 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "13.5",
     "mfe_usd": "28.0",
     "mae_usd": "27.0",
-    "bars_held": "5"
+    "bars_held": "5",
+    "atr_at_entry": "40.0341"
   },
   {
     "exit_time": "2026-05-15T22:30:27",
@@ -235,6 +247,7 @@ window.TRADES_DAYS["2026-05-15"] = [
     "mae_points": "4.0",
     "mfe_usd": "21.5",
     "mae_usd": "8.0",
-    "bars_held": "4"
+    "bars_held": "4",
+    "atr_at_entry": "38.6388"
   }
 ];

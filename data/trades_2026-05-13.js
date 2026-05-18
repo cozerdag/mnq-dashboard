@@ -19,7 +19,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "0.0",
     "mfe_usd": "232.0",
     "mae_usd": "0.0",
-    "bars_held": "3"
+    "bars_held": "3",
+    "atr_at_entry": "45.6637"
   },
   {
     "exit_time": "2026-05-13T16:54:19",
@@ -37,7 +38,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "20.25",
     "mfe_usd": "0.0",
     "mae_usd": "40.5",
-    "bars_held": "1"
+    "bars_held": "1",
+    "atr_at_entry": "53.1897"
   },
   {
     "exit_time": "2026-05-13T17:36:37",
@@ -55,7 +57,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "8.25",
     "mfe_usd": "85.5",
     "mae_usd": "16.5",
-    "bars_held": "4"
+    "bars_held": "4",
+    "atr_at_entry": "55.1787"
   },
   {
     "exit_time": "2026-05-13T17:45:38",
@@ -73,7 +76,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "17.25",
     "mfe_usd": "50.0",
     "mae_usd": "34.5",
-    "bars_held": "7"
+    "bars_held": "7",
+    "atr_at_entry": "55.5138"
   },
   {
     "exit_time": "2026-05-13T18:07:25",
@@ -91,7 +95,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "0.0",
     "mfe_usd": "22.0",
     "mae_usd": "0.0",
-    "bars_held": "1"
+    "bars_held": "1",
+    "atr_at_entry": "49.2547"
   },
   {
     "exit_time": "2026-05-13T20:16:27",
@@ -109,7 +114,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "8.75",
     "mfe_usd": "21.5",
     "mae_usd": "17.5",
-    "bars_held": "8"
+    "bars_held": "8",
+    "atr_at_entry": "32.3185"
   },
   {
     "exit_time": "2026-05-13T21:30:20",
@@ -127,7 +133,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "4.75",
     "mfe_usd": "164.0",
     "mae_usd": "9.5",
-    "bars_held": "24"
+    "bars_held": "24",
+    "atr_at_entry": "27.041"
   },
   {
     "exit_time": "2026-05-13T22:09:24",
@@ -145,7 +152,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "12.0",
     "mfe_usd": "19.0",
     "mae_usd": "24.0",
-    "bars_held": "8"
+    "bars_held": "8",
+    "atr_at_entry": "26.3333"
   },
   {
     "exit_time": "2026-05-13T22:31:18",
@@ -163,7 +171,8 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "27.0",
     "mfe_usd": "0.0",
     "mae_usd": "54.0",
-    "bars_held": "6"
+    "bars_held": "6",
+    "atr_at_entry": "27.6757"
   },
   {
     "exit_time": "2026-05-13T22:39:16",
@@ -181,6 +190,7 @@ window.TRADES_DAYS["2026-05-13"] = [
     "mae_points": "11.0",
     "mfe_usd": "8.0",
     "mae_usd": "22.0",
-    "bars_held": "6"
+    "bars_held": "6",
+    "atr_at_entry": "26.4028"
   }
 ];
