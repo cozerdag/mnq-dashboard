@@ -19,6 +19,7 @@
     --red:      #f85149;
     --blue:     #58a6ff;
     --purple:   #bc8cff;
+    --orange:   #f0883e;
     --text:     #e6edf3;
     --muted:    #8b949e;
     --muted2:   #484f58;
@@ -35,7 +36,6 @@
     font-family: var(--ff-body);
     font-size: 13px;
     min-height: 100vh;
-    padding: 0;
   }
 
   /* ── HEADER ── */
@@ -132,15 +132,11 @@
   }
 
   /* ── CHARTS GRID ── */
-  .charts-row {
-    display: grid;
-    gap: 12px;
-    margin-bottom: 12px;
-  }
-  .charts-row.full { grid-template-columns: 1fr; }
-  .charts-row.split-7-3 { grid-template-columns: 7fr 3fr; }
-  .charts-row.split-2 { grid-template-columns: 1fr 1fr; }
-  .charts-row.split-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .charts-row { display: grid; gap: 12px; margin-bottom: 12px; }
+  .charts-row.full        { grid-template-columns: 1fr; }
+  .charts-row.split-7-3   { grid-template-columns: 7fr 3fr; }
+  .charts-row.split-2     { grid-template-columns: 1fr 1fr; }
+  .charts-row.split-3     { grid-template-columns: 1fr 1fr 1fr; }
 
   .chart-card {
     background: var(--card);
@@ -166,10 +162,10 @@
     background: var(--gold);
     flex-shrink: 0;
   }
-  .chart-title .dot.green { background: var(--green); }
-  .chart-title .dot.blue  { background: var(--blue); }
-  .chart-title .dot.red   { background: var(--red); }
-  .chart-title .dot.purple{ background: var(--purple); }
+  .chart-title .dot.green  { background: var(--green); }
+  .chart-title .dot.blue   { background: var(--blue); }
+  .chart-title .dot.red    { background: var(--red); }
+  .chart-title .dot.purple { background: var(--purple); }
 
   .chart-wrap { position: relative; }
   .chart-wrap canvas { max-height: 220px; }
@@ -180,24 +176,34 @@
   .efficiency-bars { display: flex; flex-direction: column; gap: 10px; }
   .eff-row { display: grid; grid-template-columns: 110px 1fr 55px; align-items: center; gap: 10px; }
   .eff-label { font-family: var(--ff-mono); font-size: 10px; color: var(--muted); }
-  .eff-track {
-    background: var(--border);
-    border-radius: 3px;
-    height: 8px;
-    overflow: hidden;
-  }
+  .eff-track { background: var(--border); border-radius: 3px; height: 8px; overflow: hidden; }
   .eff-fill {
     height: 100%;
     border-radius: 3px;
     background: linear-gradient(90deg, var(--blue), var(--green));
     transition: width .8s ease;
   }
-  .eff-pct {
-    font-family: var(--ff-mono);
-    font-size: 11px;
-    color: var(--text);
-    text-align: right;
+  .eff-pct { font-family: var(--ff-mono); font-size: 11px; color: var(--text); text-align: right; }
+
+  /* ── PILLS ── */
+  .pill {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: .5px;
   }
+  .pill-trend  { background: rgba(88,166,255,.15);  color: var(--blue); }
+  .pill-range  { background: rgba(188,140,255,.15); color: var(--purple); }
+  .pill-trail  { background: rgba(63,185,80,.15);   color: var(--green); }
+  .pill-ema    { background: rgba(248,81,73,.15);   color: var(--red); }
+  .pill-dd     { background: rgba(248,81,73,.2);    color: var(--red); }
+  .pill-stop   { background: rgba(248,81,73,.2);    color: var(--red); }
+  .pill-time   { background: rgba(139,148,158,.15); color: var(--muted); }
+  .pill-macd   { background: rgba(188,140,255,.15); color: var(--purple); }
+  .pill-be     { background: rgba(88,166,255,.15);  color: var(--blue); }
+  .pill-dead   { background: rgba(240,136,62,.15);  color: var(--orange); }
 
   /* ── TRADE TABLE ── */
   .table-card {
@@ -215,11 +221,7 @@
     align-items: center;
   }
   .table-header .chart-title { margin-bottom: 0; }
-  .table-count {
-    font-family: var(--ff-mono);
-    font-size: 11px;
-    color: var(--muted);
-  }
+  .table-count { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); }
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; }
   thead th {
@@ -254,171 +256,70 @@
   .side-short { color: var(--red);   font-weight: 600; }
   .pnl-pos { color: var(--green); }
   .pnl-neg { color: var(--red); }
-  .pill {
-    display: inline-block;
-    padding: 2px 7px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: .5px;
-  }
-  .pill-trend  { background: rgba(88,166,255,.15); color: var(--blue); }
-  .pill-range  { background: rgba(188,140,255,.15); color: var(--purple); }
-  .pill-trail  { background: rgba(63,185,80,.15); color: var(--green); }
-  .pill-ema    { background: rgba(248,81,73,.15); color: var(--red); }
-  .pill-dd     { background: rgba(248,81,73,.2); color: var(--red); }
-  .pill-time   { background: rgba(139,148,158,.15); color: var(--muted); }
 
   /* ── NO DATA ── */
   .no-data {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 60vh;
-    gap: 16px;
-    text-align: center;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; min-height: 60vh; gap: 16px; text-align: center;
   }
-  .no-data-icon {
-    font-size: 48px;
-    opacity: .3;
-  }
+  .no-data-icon { font-size: 48px; opacity: .3; }
   .no-data h2 {
-    font-family: var(--ff-head);
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: var(--muted);
+    font-family: var(--ff-head); font-size: 28px; font-weight: 700;
+    letter-spacing: 2px; color: var(--muted);
   }
-  .no-data p {
-    color: var(--muted2);
-    max-width: 420px;
-    line-height: 1.6;
-  }
+  .no-data p { color: var(--muted2); max-width: 420px; line-height: 1.6; }
   .no-data code {
-    font-family: var(--ff-mono);
-    background: var(--border);
-    padding: 2px 8px;
-    border-radius: 4px;
-    color: var(--gold);
-    font-size: 12px;
+    font-family: var(--ff-mono); background: var(--border);
+    padding: 2px 8px; border-radius: 4px; color: var(--gold); font-size: 12px;
   }
 
   /* ── DAILY ACCORDION ── */
   .day-group {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 6px;
-    transition: border-color .2s;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden; margin-bottom: 6px; transition: border-color .2s;
   }
   .day-group:hover { border-color: var(--border2); }
   .day-group.expanded { border-color: var(--border2); }
-
   .day-summary {
     display: grid;
     grid-template-columns: 160px 80px 100px 1fr 120px 30px;
-    align-items: center;
-    padding: 11px 18px;
-    cursor: pointer;
-    user-select: none;
-    gap: 12px;
-    transition: background .1s;
+    align-items: center; padding: 11px 18px; cursor: pointer;
+    user-select: none; gap: 12px; transition: background .1s;
   }
   .day-summary:hover { background: rgba(255,255,255,.025); }
   .day-summary.expanded { background: rgba(255,255,255,.02); border-bottom: 1px solid var(--border); }
-
-  .day-date {
-    font-family: var(--ff-mono);
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--text);
-    letter-spacing: .5px;
-  }
-  .day-count {
-    font-family: var(--ff-mono);
-    font-size: 11px;
-    color: var(--muted);
-  }
-  .day-wl {
-    font-family: var(--ff-mono);
-    font-size: 11px;
-  }
+  .day-date { font-family: var(--ff-mono); font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: .5px; }
+  .day-count { font-family: var(--ff-mono); font-size: 11px; color: var(--muted); }
+  .day-wl { font-family: var(--ff-mono); font-size: 11px; }
   .day-wl .w { color: var(--green); }
   .day-wl .sep { color: var(--muted2); margin: 0 2px; }
   .day-wl .l { color: var(--red); }
-
-  .day-bar-wrap {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .day-bar-wrap { display: flex; align-items: center; gap: 8px; }
   .day-bar-track {
-    flex: 1;
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: visible;
-    position: relative;
+    flex: 1; height: 4px; background: var(--border); border-radius: 2px; overflow: visible; position: relative;
   }
-  .day-bar-fill {
-    position: absolute;
-    top: 0; bottom: 0;
-    border-radius: 2px;
-  }
+  .day-bar-fill { position: absolute; top: 0; bottom: 0; border-radius: 2px; }
   .day-bar-fill.pos { background: var(--green); left: 50%; }
   .day-bar-fill.neg { background: var(--red); right: 50%; }
-  .day-bar-center {
-    position: absolute;
-    left: 50%; top: -3px; bottom: -3px;
-    width: 1px;
-    background: var(--border2);
-  }
-
-  .day-pnl {
-    font-family: var(--ff-mono);
-    font-size: 13px;
-    font-weight: 600;
-    text-align: right;
-  }
-  .day-chevron {
-    color: var(--muted2);
-    font-size: 11px;
-    text-align: center;
-    transition: transform .25s;
-  }
+  .day-bar-center { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 1px; background: var(--border2); }
+  .day-pnl { font-family: var(--ff-mono); font-size: 13px; font-weight: 600; text-align: right; }
+  .day-chevron { color: var(--muted2); font-size: 11px; text-align: center; transition: transform .25s; }
   .day-group.expanded .day-chevron { transform: rotate(180deg); }
-
-  .day-trades {
-    display: none;
-    overflow-x: auto;
-  }
+  .day-trades { display: none; overflow-x: auto; }
   .day-group.expanded .day-trades { display: block; }
-
-  /* Inner trade table inherits global table styles */
   .day-trades table { width: 100%; border-collapse: collapse; }
-  .day-trades thead th {
-    background: rgba(0,0,0,.2);
-    padding: 8px 14px;
-  }
+  .day-trades thead th { background: rgba(0,0,0,.2); padding: 8px 14px; }
   .day-trades tbody tr:last-child { border-bottom: none; }
-
-  /* Accordion header */
   .daily-table-header {
-    padding: 16px 20px 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 6px;
+    padding: 16px 20px 12px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;
   }
   .daily-table-header .chart-title { margin-bottom: 0; }
-  .daily-table-header .table-count {
-    font-family: var(--ff-mono);
-    font-size: 11px;
-    color: var(--muted);
-  }
+
+  /* ── TIME CELL ── */
+  .time-cell { line-height: 1.5; }
+  .time-trt { color: var(--text); font-size: 11px; }
+  .time-utc { color: var(--muted); font-size: 9px; letter-spacing: .3px; }
 
   /* ── SCROLLBAR ── */
   ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -426,14 +327,19 @@
   ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--muted2); }
 
-  /* ── DATE FILTER BAR ── */
+  /* ── FILTER BAR ── */
   .filter-bar {
     background: var(--card);
     border-bottom: 1px solid var(--border);
     padding: 10px 28px;
     display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .filter-row {
+    display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     flex-wrap: wrap;
   }
   .filter-label {
@@ -444,11 +350,9 @@
     text-transform: uppercase;
     color: var(--muted);
     flex-shrink: 0;
+    min-width: 70px;
   }
-  .filter-presets {
-    display: flex;
-    gap: 6px;
-  }
+  .filter-presets { display: flex; gap: 6px; }
   .filter-btn {
     background: transparent;
     border: 1px solid var(--border2);
@@ -462,37 +366,32 @@
     transition: all .15s;
   }
   .filter-btn:hover { border-color: var(--gold-dim); color: var(--text); }
-  .filter-btn.active {
-    background: var(--gold-dim);
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-  .filter-dates {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .filter-btn.active { background: var(--gold-dim); border-color: var(--gold); color: var(--gold); }
+  .filter-dates { display: flex; align-items: center; gap: 8px; }
   .filter-date-input {
-    background: var(--bg);
-    border: 1px solid var(--border2);
-    color: var(--text);
-    font-family: var(--ff-mono);
-    font-size: 11px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    outline: none;
-    cursor: pointer;
-    transition: border-color .15s;
+    background: var(--bg); border: 1px solid var(--border2); color: var(--text);
+    font-family: var(--ff-mono); font-size: 11px; padding: 4px 8px;
+    border-radius: 4px; outline: none; cursor: pointer; transition: border-color .15s;
   }
   .filter-date-input:focus { border-color: var(--gold-dim); }
   .filter-sep { color: var(--muted2); font-size: 11px; }
   .filter-count {
-    font-family: var(--ff-mono);
-    font-size: 11px;
-    color: var(--muted);
-    margin-left: auto;
+    font-family: var(--ff-mono); font-size: 11px; color: var(--muted);
+    padding-top: 2px;
   }
   .filter-count span { color: var(--gold); }
+
+  /* ── EXIT REASON CHECKBOXES ── */
+  .exit-reason-filter-wrap { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .exit-cb-label { display: inline-flex; cursor: pointer; }
+  .exit-cb-label input[type="checkbox"] {
+    position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+  }
+  .exit-cb-label .pill { opacity: 0.3; transition: opacity .15s, transform .1s; user-select: none; }
+  .exit-cb-label.checked .pill { opacity: 1; }
+  .exit-cb-label:hover .pill { opacity: 0.65; }
+  .exit-cb-label.checked:hover .pill { opacity: 0.85; }
+  .exit-filter-btns { display: flex; gap: 4px; margin-left: 4px; }
 </style>
 </head>
 <body>
@@ -509,19 +408,29 @@
 </div>
 
 <div class="filter-bar" id="filterBar">
-  <span class="filter-label">DATE RANGE</span>
-  <div class="filter-presets">
-    <button class="filter-btn active" data-preset="all">ALL</button>
-    <button class="filter-btn" data-preset="7d">LAST 7 DAYS</button>
-    <button class="filter-btn" data-preset="week">THIS WEEK</button>
-    <button class="filter-btn" data-preset="custom">CUSTOM</button>
+  <div class="filter-row">
+    <span class="filter-label">DATE</span>
+    <div class="filter-presets">
+      <button class="filter-btn active" data-preset="all">ALL</button>
+      <button class="filter-btn" data-preset="7d">LAST 7 DAYS</button>
+      <button class="filter-btn" data-preset="week">THIS WEEK</button>
+      <button class="filter-btn" data-preset="custom">CUSTOM</button>
+    </div>
+    <div class="filter-dates" id="filterDates" style="display:none">
+      <input type="date" class="filter-date-input" id="filterFrom" title="From date">
+      <span class="filter-sep">→</span>
+      <input type="date" class="filter-date-input" id="filterTo" title="To date">
+    </div>
+    <div class="filter-count" id="filterCount"></div>
   </div>
-  <div class="filter-dates" id="filterDates" style="display:none">
-    <input type="date" class="filter-date-input" id="filterFrom" title="From date">
-    <span class="filter-sep">→</span>
-    <input type="date" class="filter-date-input" id="filterTo" title="To date">
+  <div class="filter-row">
+    <span class="filter-label">EXIT TYPE</span>
+    <div class="exit-reason-filter-wrap" id="exitReasonFilter"></div>
+    <div class="exit-filter-btns">
+      <button class="filter-btn" id="exitAllBtn">ALL</button>
+      <button class="filter-btn" id="exitNoneBtn">NONE</button>
+    </div>
   </div>
-  <div class="filter-count" id="filterCount"></div>
 </div>
 
 <div class="main" id="main">
@@ -534,7 +443,6 @@
   </div>
 </div>
 
-<!-- Data file injected by update_dashboard.sh -->
 <script src="data/trades.js"></script>
 
 <script>
@@ -542,19 +450,64 @@
 
   // ── HELPERS ──────────────────────────────────────────────────────
   const $ = id => document.getElementById(id);
-  const fmt = (n, dec=2) => n == null ? '—' : (n >= 0 ? '+' : '') + n.toFixed(dec);
+  const fmt    = (n, dec=2) => n == null ? '—' : (n >= 0 ? '+' : '') + n.toFixed(dec);
   const fmtPts = n => n == null ? '—' : (n >= 0 ? '+' : '') + n.toFixed(2);
   const fmtUSD = n => n == null ? '—' : (n >= 0 ? '+$' : '-$') + Math.abs(n).toFixed(2);
-  const fmtDate = s => s ? s.slice(0, 16).replace('T', ' ') : '—';
-  const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+  const clamp  = (v,a,b) => Math.max(a, Math.min(b, v));
+
+  // ── TIME HELPERS (FIX 24) ─────────────────────────────────────────
+  // Handles: "2026-05-21T14:59:43Z", "2026-05-13 08:45:00-05:00", legacy no-tz strings
+  function parseTime(s) {
+    if (!s) return null;
+    s = s.trim().replace(' ', 'T');
+    // Already has timezone info
+    if (s.endsWith('Z') || /[+-]\d{2}:\d{2}$/.test(s)) {
+      const d = new Date(s);
+      return isNaN(d.getTime()) ? null : d;
+    }
+    // No timezone — treat as UTC (new format after FIX 24)
+    const d = new Date(s + 'Z');
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  function pad2(n) { return String(n).padStart(2, '0'); }
+
+  function fmtTimeCell(s) {
+    if (!s) return '<span style="color:var(--muted2)">—</span>';
+    const d = parseTime(s);
+    if (!d) return `<span class="time-trt">${s.slice(0,16).replace('T',' ')}</span>`;
+    // UTC
+    const utcDate = d.toISOString().slice(0, 10);
+    const utcTime = d.toISOString().slice(11, 16);
+    // Turkey (UTC+3)
+    const trMs   = d.getTime() + 3 * 60 * 60 * 1000;
+    const trDate = new Date(trMs);
+    const trTime = trDate.toISOString().slice(11, 16);
+    return `<div class="time-cell">
+      <div class="time-trt">${utcDate}</div>
+      <div class="time-trt">${trTime} <span style="color:var(--muted2);font-size:9px">TRT</span> · <span class="time-utc">${utcTime} UTC</span></div>
+    </div>`;
+  }
+
+  // For day-grouping — use UTC date from exit_time
+  function exitDate(t) {
+    const d = parseTime(t.exit_time);
+    return d ? d.toISOString().slice(0, 10) : t.exit_time.slice(0, 10);
+  }
 
   function pillClass(reason) {
-    if (!reason) return '';
-    if (reason.includes('trail'))    return 'pill pill-trail';
+    if (!reason) return 'pill';
+    if (reason.includes('trail') || reason.includes('breakeven')) {
+      if (reason.includes('breakeven')) return 'pill pill-be';
+      return 'pill pill-trail';
+    }
     if (reason.includes('ema20'))    return 'pill pill-ema';
     if (reason.includes('dd'))       return 'pill pill-dd';
+    if (reason.includes('ibkr'))     return 'pill pill-stop';
+    if (reason.includes('dead'))     return 'pill pill-dead';
     if (reason.includes('time'))     return 'pill pill-time';
-    if (reason.includes('macd'))     return 'pill pill-ema';
+    if (reason.includes('macd'))     return 'pill pill-macd';
+    if (reason.includes('shutdown')) return 'pill pill-time';
     return 'pill';
   }
 
@@ -566,22 +519,16 @@
   Chart.defaults.color = CHART_DEFAULTS.color;
 
   // ── CHECK DATA ───────────────────────────────────────────────────
-  if (typeof window.TRADES_DATA === 'undefined') {
-    return; // show no-data state
-  }
+  if (typeof window.TRADES_DATA === 'undefined') return;
 
   $('noData').style.display = 'none';
-
-  // Update timestamp
-  if (window.LAST_UPDATED) {
-    $('lastUpdated').textContent = 'Last updated: ' + window.LAST_UPDATED;
-  }
+  if (window.LAST_UPDATED) $('lastUpdated').textContent = 'Last updated: ' + window.LAST_UPDATED;
 
   const allTrades = window.TRADES_DATA;
   if (!allTrades || allTrades.length === 0) {
     $('noData').style.display = 'flex';
     $('noData').querySelector('h2').textContent = 'NO TRADES YET';
-    $('noData').querySelector('p').textContent = 'No trades found in the log file. Run the bot first.';
+    $('noData').querySelector('p').textContent = 'No trades found in the log file.';
     return;
   }
 
@@ -589,45 +536,32 @@
   let activePreset = 'all';
   let charts = [];
 
-  function getFilteredTrades() {
-    const fromVal = $('filterFrom').value;
-    const toVal   = $('filterTo').value;
-    if (activePreset === 'all' || (!fromVal && !toVal)) return allTrades;
-    return allTrades.filter(t => {
-      const d = t.exit_time.slice(0, 10);
-      if (fromVal && d < fromVal) return false;
-      if (toVal   && d > toVal)   return false;
-      return true;
-    });
-  }
-
   function setPresetDates(preset) {
     const today = new Date();
-    const fmt   = d => d.toISOString().slice(0, 10);
+    const fmtD  = d => d.toISOString().slice(0, 10);
     if (preset === 'all') {
       $('filterFrom').value = '';
       $('filterTo').value   = '';
       $('filterDates').style.display = 'none';
     } else if (preset === '7d') {
       const from = new Date(today); from.setDate(from.getDate() - 6);
-      $('filterFrom').value = fmt(from);
-      $('filterTo').value   = fmt(today);
+      $('filterFrom').value = fmtD(from);
+      $('filterTo').value   = fmtD(today);
       $('filterDates').style.display = 'none';
     } else if (preset === 'week') {
       const from = new Date(today);
-      from.setDate(from.getDate() - from.getDay() + 1); // Monday
-      $('filterFrom').value = fmt(from);
-      $('filterTo').value   = fmt(today);
+      from.setDate(from.getDate() - from.getDay() + 1);
+      $('filterFrom').value = fmtD(from);
+      $('filterTo').value   = fmtD(today);
       $('filterDates').style.display = 'none';
     } else if (preset === 'custom') {
       $('filterDates').style.display = 'flex';
     }
   }
 
-  // Preset button clicks
-  document.querySelectorAll('.filter-btn').forEach(btn => {
+  document.querySelectorAll('.filter-btn[data-preset]').forEach(btn => {
     btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.filter-btn[data-preset]').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       activePreset = btn.dataset.preset;
       setPresetDates(activePreset);
@@ -635,21 +569,84 @@
     });
   });
 
-  // Custom date input changes
   ['filterFrom', 'filterTo'].forEach(id => {
-    $(id).addEventListener('change', () => {
-      renderDashboard();
-    });
+    $(id).addEventListener('change', renderDashboard);
   });
 
+  // ── EXIT REASON FILTER ───────────────────────────────────────────
+  const allExitReasons = [...new Set(allTrades.map(t => t.exit_reason || 'unknown'))].sort();
+  let activeExitReasons = new Set(allExitReasons);
+
+  function renderExitReasonCheckboxes() {
+    const container = $('exitReasonFilter');
+    container.innerHTML = '';
+    allExitReasons.forEach(r => {
+      const label = document.createElement('label');
+      label.className = 'exit-cb-label' + (activeExitReasons.has(r) ? ' checked' : '');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = r;
+      cb.checked = activeExitReasons.has(r);
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          activeExitReasons.add(r);
+          label.classList.add('checked');
+        } else {
+          activeExitReasons.delete(r);
+          label.classList.remove('checked');
+        }
+        renderDashboard();
+      });
+      const pill = document.createElement('span');
+      pill.className = pillClass(r);
+      pill.textContent = r;
+      label.appendChild(cb);
+      label.appendChild(pill);
+      container.appendChild(label);
+    });
+  }
+
+  $('exitAllBtn').addEventListener('click', () => {
+    activeExitReasons = new Set(allExitReasons);
+    renderExitReasonCheckboxes();
+    renderDashboard();
+  });
+
+  $('exitNoneBtn').addEventListener('click', () => {
+    activeExitReasons = new Set();
+    renderExitReasonCheckboxes();
+    renderDashboard();
+  });
+
+  renderExitReasonCheckboxes();
+
+  // ── COMBINED FILTER ──────────────────────────────────────────────
+  function getFilteredTrades() {
+    const fromVal = $('filterFrom').value;
+    const toVal   = $('filterTo').value;
+
+    return allTrades.filter(t => {
+      // Date filter
+      if (activePreset !== 'all' || fromVal || toVal) {
+        const d = exitDate(t);
+        if (fromVal && d < fromVal) return false;
+        if (toVal   && d > toVal)   return false;
+      }
+      // Exit reason filter
+      if (activeExitReasons.size < allExitReasons.length) {
+        if (!activeExitReasons.has(t.exit_reason || 'unknown')) return false;
+      }
+      return true;
+    });
+  }
+
+  // ── RENDER ───────────────────────────────────────────────────────
   function renderDashboard() {
-    // Destroy existing charts before re-render
     charts.forEach(c => c.destroy());
     charts = [];
 
     const trades = getFilteredTrades();
 
-    // Update filter count
     $('filterCount').innerHTML = trades.length === allTrades.length
       ? `<span>${trades.length}</span> trades`
       : `<span>${trades.length}</span> of ${allTrades.length} trades`;
@@ -658,490 +655,435 @@
       $('main').innerHTML = `<div class="no-data">
         <div class="no-data-icon">🔍</div>
         <h2>NO TRADES IN RANGE</h2>
-        <p>No trades found for the selected date range. Try a wider range or select "ALL".</p>
+        <p>No trades found for the selected filters. Try a wider range or select more exit types.</p>
       </div>`;
       return;
     }
-    // ── COMPUTE STATS ───────────────────────────────────────────────
+
+    // ── COMPUTE STATS ─────────────────────────────────────────────
     const wins    = trades.filter(t => +t.realized_usd_net > 0);
     const losses  = trades.filter(t => +t.realized_usd_net <= 0);
-  const winRate = (wins.length / trades.length * 100).toFixed(1);
+    const winRate = (wins.length / trades.length * 100).toFixed(1);
 
-  const totalNet  = trades.reduce((s,t) => s + (+t.realized_usd_net), 0);
-  const totalGross= trades.reduce((s,t) => s + (+t.realized_usd_gross), 0);
-  const totalPts  = trades.reduce((s,t) => s + (+t.realized_points), 0);
+    const totalNet   = trades.reduce((s,t) => s + (+t.realized_usd_net), 0);
+    const totalGross = trades.reduce((s,t) => s + (+t.realized_usd_gross), 0);
+    const totalPts   = trades.reduce((s,t) => s + (+t.realized_points), 0);
 
-  const avgWin  = wins.length  ? wins.reduce((s,t)  => s + (+t.realized_usd_net), 0) / wins.length  : 0;
-  const avgLoss = losses.length? losses.reduce((s,t) => s + (+t.realized_usd_net), 0) / losses.length: 0;
+    const avgWin  = wins.length   ? wins.reduce((s,t)   => s + (+t.realized_usd_net), 0) / wins.length   : 0;
+    const avgLoss = losses.length ? losses.reduce((s,t) => s + (+t.realized_usd_net), 0) / losses.length : 0;
 
-  const sumWins   = wins.reduce((s,t) => s + (+t.realized_usd_net), 0);
-  const sumLosses = Math.abs(losses.reduce((s,t) => s + (+t.realized_usd_net), 0));
-  const profitFactor = sumLosses > 0 ? (sumWins / sumLosses).toFixed(2) : '∞';
+    const sumWins   = wins.reduce((s,t) => s + (+t.realized_usd_net), 0);
+    const sumLosses = Math.abs(losses.reduce((s,t) => s + (+t.realized_usd_net), 0));
+    const profitFactor = sumLosses > 0 ? (sumWins / sumLosses).toFixed(2) : '∞';
 
-  const bestTrade  = trades.reduce((b,t) => (+t.realized_usd_net) > (+b.realized_usd_net) ? t : b, trades[0]);
-  const worstTrade = trades.reduce((w,t) => (+t.realized_usd_net) < (+w.realized_usd_net) ? t : w, trades[0]);
+    const bestTrade  = trades.reduce((b,t) => (+t.realized_usd_net) > (+b.realized_usd_net) ? t : b, trades[0]);
+    const worstTrade = trades.reduce((w,t) => (+t.realized_usd_net) < (+w.realized_usd_net) ? t : w, trades[0]);
+    const avgBars    = (trades.reduce((s,t) => s + (+t.bars_held), 0) / trades.length).toFixed(1);
 
-  const avgBars = (trades.reduce((s,t) => s + (+t.bars_held), 0) / trades.length).toFixed(1);
+    // Daily P&L
+    const byDay = {};
+    trades.forEach(t => {
+      const day = exitDate(t);
+      byDay[day] = (byDay[day] || 0) + (+t.realized_usd_net);
+    });
+    const days   = Object.keys(byDay).sort();
+    const dayPnL = days.map(d => byDay[d]);
 
-  // Daily P&L
-  const byDay = {};
-  trades.forEach(t => {
-    const day = t.exit_time.slice(0, 10);
-    byDay[day] = (byDay[day] || 0) + (+t.realized_usd_net);
-  });
-  const days   = Object.keys(byDay).sort();
-  const dayPnL = days.map(d => byDay[d]);
+    // Cumulative P&L
+    let cumPnL = [], running = 0;
+    trades.slice().sort((a,b) => a.exit_time.localeCompare(b.exit_time))
+      .forEach(t => { running += +t.realized_usd_net; cumPnL.push(+running.toFixed(2)); });
 
-  // Cumulative P&L
-  let cumPnL = [], running = 0;
-  trades.slice().sort((a,b) => a.exit_time.localeCompare(b.exit_time))
-    .forEach(t => { running += +t.realized_usd_net; cumPnL.push(+running.toFixed(2)); });
+    // Exit reason breakdown
+    const byReason = {};
+    trades.forEach(t => {
+      const r = t.exit_reason || 'unknown';
+      if (!byReason[r]) byReason[r] = { count: 0, pnl: 0 };
+      byReason[r].count++;
+      byReason[r].pnl += +t.realized_usd_net;
+    });
 
-  // Exit reason breakdown
-  const byReason = {};
-  trades.forEach(t => {
-    const r = t.exit_reason || 'unknown';
-    if (!byReason[r]) byReason[r] = { count: 0, pnl: 0 };
-    byReason[r].count++;
-    byReason[r].pnl += +t.realized_usd_net;
-  });
+    // Trail efficiency
+    const trailTrades = trades.filter(t =>
+      t.exit_reason && t.exit_reason.includes('trail') && +t.mfe_points > 0
+    );
+    const avgCapture = trailTrades.length
+      ? trailTrades.reduce((s,t) => s + clamp(+t.realized_points / +t.mfe_points, 0, 1), 0) / trailTrades.length * 100
+      : null;
 
-  // Strategy breakdown
-  const byMode = {};
-  trades.forEach(t => {
-    const m = t.strategy_mode || 'UNKNOWN';
-    if (!byMode[m]) byMode[m] = { count: 0, wins: 0, pnl: 0 };
-    byMode[m].count++;
-    byMode[m].pnl += +t.realized_usd_net;
-    if (+t.realized_usd_net > 0) byMode[m].wins++;
-  });
+    // Daily win rates
+    const dailyPnLs    = days.map(d => trades.filter(t => exitDate(t) === d).reduce((s,t) => s + (+t.realized_usd_net), 0));
+    const profitDays   = dailyPnLs.filter(p => p > 0).length;
+    const bestDay      = Math.max(...dailyPnLs);
+    const worstDay     = Math.min(...dailyPnLs);
 
-  // Trailing TP efficiency (how much of MFE was captured)
-  const trailTrades = trades.filter(t =>
-    t.exit_reason && t.exit_reason.includes('trail') && +t.mfe_points > 0
-  );
-  const avgCapture = trailTrades.length
-    ? trailTrades.reduce((s,t) => s + clamp(+t.realized_points / +t.mfe_points, 0, 1), 0) / trailTrades.length * 100
-    : null;
+    // ── BUILD DOM ─────────────────────────────────────────────────
+    const main = $('main');
+    main.innerHTML = '';
 
-  // ── BUILD DOM ────────────────────────────────────────────────────
-  const main = $('main');
-  main.innerHTML = '';
+    // ── STAT CARDS ────────────────────────────────────────────────
+    const statsRow = document.createElement('div');
+    statsRow.className = 'stats-row';
+    function statCard(label, value, sub, cls='', valClass='') {
+      return `<div class="stat-card ${cls}">
+        <div class="stat-label">${label}</div>
+        <div class="stat-value ${valClass}">${value}</div>
+        ${sub ? `<div class="stat-sub">${sub}</div>` : ''}
+      </div>`;
+    }
+    statsRow.innerHTML =
+      statCard('NET P&L', fmtUSD(totalNet), `${fmtPts(totalPts)} pts gross ${fmtUSD(totalGross)}`,
+        totalNet >= 0 ? 'green' : 'red', totalNet >= 0 ? 'pos' : 'neg') +
+      statCard('WIN RATE', winRate + '%', `${wins.length}W / ${losses.length}L of ${trades.length} trades`, 'blue') +
+      statCard('PROFIT FACTOR', profitFactor, `Avg win ${fmtUSD(avgWin)} · Avg loss ${fmtUSD(avgLoss)}`) +
+      statCard('BEST TRADE', fmtUSD(+bestTrade.realized_usd_net),
+        bestTrade.side + ' · ' + (exitDate(bestTrade)), 'green', 'pos') +
+      statCard('WORST TRADE', fmtUSD(+worstTrade.realized_usd_net),
+        worstTrade.side + ' · ' + (exitDate(worstTrade)), 'red', 'neg') +
+      statCard('AVG HOLD', avgBars + ' bars', `${trades.length} trades · ${days.length} days`);
+    main.appendChild(statsRow);
 
-  // ── STAT CARDS ──────────────────────────────────────────────────
-  const statsRow = document.createElement('div');
-  statsRow.className = 'stats-row';
-
-  function statCard(label, value, sub, cls='', valClass='') {
-    return `<div class="stat-card ${cls}">
-      <div class="stat-label">${label}</div>
-      <div class="stat-value ${valClass}">${value}</div>
-      ${sub ? `<div class="stat-sub">${sub}</div>` : ''}
+    // ── CUM P&L CHART ─────────────────────────────────────────────
+    const cumRow = document.createElement('div');
+    cumRow.className = 'charts-row full';
+    cumRow.innerHTML = `<div class="chart-card">
+      <div class="chart-title"><span class="dot ${totalNet>=0?'green':'red'}"></span>CUMULATIVE NET P&L</div>
+      <div class="chart-wrap tall"><canvas id="cumChart"></canvas></div>
     </div>`;
-  }
+    main.appendChild(cumRow);
 
-  // Daily win rate
-  const dailyPnLs    = days.map(d => trades.filter(t => t.exit_time.slice(0,10) === d)
-                          .reduce((s,t) => s + (+t.realized_usd_net), 0));
-  const profitDays   = dailyPnLs.filter(p => p > 0).length;
-  const lossDays     = dailyPnLs.filter(p => p <= 0).length;
-  const dailyWinRate = (profitDays / days.length * 100).toFixed(1);
-  const bestDay      = Math.max(...dailyPnLs);
-  const worstDay     = Math.min(...dailyPnLs);
+    // ── DAILY + WIN/LOSS ──────────────────────────────────────────
+    const row2 = document.createElement('div');
+    row2.className = 'charts-row split-7-3';
+    row2.innerHTML = `
+      <div class="chart-card">
+        <div class="chart-title"><span class="dot blue"></span>DAILY P&L</div>
+        <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title"><span class="dot"></span>WIN / LOSS</div>
+        <div class="chart-wrap donut"><canvas id="donutChart"></canvas></div>
+      </div>`;
+    main.appendChild(row2);
 
-  statsRow.innerHTML =
-    statCard('NET P&L', fmtUSD(totalNet), `${fmtPts(totalPts)} pts gross ${fmtUSD(totalGross)}`,
-      totalNet >= 0 ? 'green' : 'red', totalNet >= 0 ? 'pos' : 'neg') +
-    statCard('WIN RATE', winRate + '%', `${wins.length}W / ${losses.length}L of ${trades.length} trades`,
-      'blue') +
-    statCard('PROFIT FACTOR', profitFactor, `Avg win ${fmtUSD(avgWin)} · Avg loss ${fmtUSD(avgLoss)}`) +
-    statCard('BEST TRADE', fmtUSD(+bestTrade.realized_usd_net),
-      bestTrade.side + ' · ' + fmtDate(bestTrade.exit_time), 'green', 'pos') +
-    statCard('WORST TRADE', fmtUSD(+worstTrade.realized_usd_net),
-      worstTrade.side + ' · ' + fmtDate(worstTrade.exit_time), 'red', 'neg') +
-    statCard('AVG HOLD', avgBars + ' bars', `${trades.length} trades · ${days.length} days`);
-
-  main.appendChild(statsRow);
-
-  // ── CUM P&L CHART ────────────────────────────────────────────────
-  const cumRow = document.createElement('div');
-  cumRow.className = 'charts-row full';
-  cumRow.innerHTML = `<div class="chart-card">
-    <div class="chart-title"><span class="dot ${totalNet>=0?'green':'red'}"></span>CUMULATIVE NET P&L</div>
-    <div class="chart-wrap tall"><canvas id="cumChart"></canvas></div>
-  </div>`;
-  main.appendChild(cumRow);
-
-  // ── DAILY + WIN/LOSS ROW ─────────────────────────────────────────
-  const row2 = document.createElement('div');
-  row2.className = 'charts-row split-7-3';
-  row2.innerHTML = `
-    <div class="chart-card">
-      <div class="chart-title"><span class="dot blue"></span>DAILY P&L</div>
-      <div class="chart-wrap"><canvas id="dailyChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title"><span class="dot"></span>WIN / LOSS</div>
-      <div class="chart-wrap donut"><canvas id="donutChart"></canvas></div>
-    </div>`;
-  main.appendChild(row2);
-
-  // ── DAILY WIN RATE CHART ─────────────────────────────────────────
-  const row2b = document.createElement('div');
-  row2b.className = 'charts-row full';
-  row2b.innerHTML = `
-    <div class="chart-card">
+    // ── DAILY WIN RATE ────────────────────────────────────────────
+    const row2b = document.createElement('div');
+    row2b.className = 'charts-row full';
+    row2b.innerHTML = `<div class="chart-card">
       <div class="chart-title"><span class="dot green"></span>WIN RATE PER DAY</div>
       <div class="chart-wrap"><canvas id="dailyWinRateChart"></canvas></div>
     </div>`;
-  main.appendChild(row2b);
+    main.appendChild(row2b);
 
-  // ── EXIT REASON + TRAIL EFFICIENCY ──────────────────────────────
-  const row3 = document.createElement('div');
-  row3.className = 'charts-row split-2';
-  const trailHTML = trailTrades.length ? buildTrailEfficiency(trailTrades) : '<p style="color:var(--muted);font-size:12px">No trailing TP trades yet.</p>';
-  row3.innerHTML = `
-    <div class="chart-card">
-      <div class="chart-title"><span class="dot purple"></span>EXIT REASON BREAKDOWN</div>
-      <div class="chart-wrap"><canvas id="reasonChart"></canvas></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title"><span class="dot blue"></span>TRAILING TP EFFICIENCY</div>
-      <div style="margin-top:8px">${trailHTML}</div>
-      ${avgCapture ? `<div style="margin-top:16px;font-family:var(--ff-mono);font-size:11px;color:var(--muted)">Average capture: <span style="color:var(--text)">${avgCapture.toFixed(1)}% of MFE</span></div>` : ''}
-    </div>`;
-  main.appendChild(row3);
-
-  // ── DAILY ACCORDION ──────────────────────────────────────────────
-  // Group trades by day
-  const tradesByDay = {};
-  trades.forEach(t => {
-    const day = t.exit_time.slice(0, 10);
-    if (!tradesByDay[day]) tradesByDay[day] = [];
-    tradesByDay[day].push(t);
-  });
-  const sortedDays = Object.keys(tradesByDay).sort((a,b) => b.localeCompare(a)); // newest first
-
-  // Max abs daily PnL for bar scaling
-  const maxAbsDayPnL = Math.max(...sortedDays.map(d =>
-    Math.abs(tradesByDay[d].reduce((s,t) => s + (+t.realized_usd_net), 0))
-  ));
-
-  const accordionWrap = document.createElement('div');
-
-  // Header row above accordions
-  const accHeader = document.createElement('div');
-  accHeader.style.cssText = 'background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 20px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;';
-  accHeader.innerHTML = `
-    <div class="chart-title" style="margin-bottom:0"><span class="dot"></span>DAILY P&amp;L — TRADE LOG</div>
-    <div class="table-count">${trades.length} trades · ${sortedDays.length} days · click a day to expand</div>`;
-  accordionWrap.appendChild(accHeader);
-
-  // Column header labels row
-  const colLabels = document.createElement('div');
-  colLabels.style.cssText = 'display:grid;grid-template-columns:160px 80px 100px 1fr 120px 30px;gap:12px;padding:4px 18px 6px;';
-  colLabels.innerHTML = `
-    <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">DATE</div>
-    <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">TRADES</div>
-    <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">W / L</div>
-    <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">DISTRIBUTION</div>
-    <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2);text-align:right">NET P&amp;L</div>
-    <div></div>`;
-  accordionWrap.appendChild(colLabels);
-
-  function tradeRowHTML(t) {
-    const net = +t.realized_usd_net;
-    const pts = +t.realized_points;
-    return `<tr>
-      <td>${fmtDate(t.exit_time)}</td>
-      <td class="${t.side==='LONG'?'side-long':'side-short'}">${t.side}</td>
-      <td><span class="pill ${t.strategy_mode==='TREND'?'pill-trend':'pill-range'}">${t.strategy_mode}</span></td>
-      <td><span class="${pillClass(t.exit_reason)}">${t.exit_reason||'—'}</span></td>
-      <td>${(+t.entry_price).toFixed(2)}</td>
-      <td>${(+t.exit_price).toFixed(2)}</td>
-      <td class="${pts>=0?'pnl-pos':'pnl-neg'}">${fmtPts(pts)}</td>
-      <td class="${net>=0?'pnl-pos':'pnl-neg'}">${fmtUSD(net)}</td>
-      <td style="color:var(--blue)">${(+t.mfe_points).toFixed(2)}</td>
-      <td style="color:var(--red)">${(+t.mae_points).toFixed(2)}</td>
-      <td>${t.bars_held}</td>
-    </tr>`;
-  }
-
-  sortedDays.forEach((day, idx) => {
-    const dayTrades = tradesByDay[day].slice().sort((a,b) => a.exit_time.localeCompare(b.exit_time));
-    const dayNet  = dayTrades.reduce((s,t) => s + (+t.realized_usd_net), 0);
-    const dayWins = dayTrades.filter(t => +t.realized_usd_net > 0).length;
-    const dayLoss = dayTrades.length - dayWins;
-    const barPct  = maxAbsDayPnL > 0 ? Math.abs(dayNet) / maxAbsDayPnL * 48 : 0; // max 48% from centre
-
-    const group = document.createElement('div');
-    group.className = 'day-group';
-
-    // Format date nicely: "Wed, May 14"
-    const dateObj = new Date(day + 'T12:00:00');
-    const niceDateShort = dateObj.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
-
-    group.innerHTML = `
-      <div class="day-summary">
-        <div class="day-date">${niceDateShort}</div>
-        <div class="day-count">${dayTrades.length} trade${dayTrades.length!==1?'s':''}</div>
-        <div class="day-wl">
-          <span class="w">${dayWins}W</span><span class="sep">/</span><span class="l">${dayLoss}L</span>
-        </div>
-        <div class="day-bar-wrap">
-          <div class="day-bar-track">
-            <div class="day-bar-center"></div>
-            <div class="day-bar-fill ${dayNet>=0?'pos':'neg'}" style="width:${barPct.toFixed(1)}%"></div>
-          </div>
-        </div>
-        <div class="day-pnl ${dayNet>=0?'pnl-pos':'pnl-neg'}">${fmtUSD(dayNet)}</div>
-        <div class="day-chevron">▼</div>
+    // ── EXIT REASON + TRAIL EFFICIENCY ────────────────────────────
+    const row3 = document.createElement('div');
+    row3.className = 'charts-row split-2';
+    const trailHTML = trailTrades.length
+      ? buildTrailEfficiency(trailTrades)
+      : '<p style="color:var(--muted);font-size:12px">No trailing TP trades yet.</p>';
+    row3.innerHTML = `
+      <div class="chart-card">
+        <div class="chart-title"><span class="dot purple"></span>EXIT REASON BREAKDOWN</div>
+        <div class="chart-wrap"><canvas id="reasonChart"></canvas></div>
       </div>
-      <div class="day-trades">
-        <table>
-          <thead>
-            <tr>
-              <th>DATE/TIME</th>
-              <th>SIDE</th>
-              <th>MODE</th>
-              <th>EXIT REASON</th>
-              <th>ENTRY</th>
-              <th>EXIT</th>
-              <th>PTS</th>
-              <th>NET P&amp;L</th>
-              <th>MFE</th>
-              <th>MAE</th>
-              <th>BARS</th>
-            </tr>
-          </thead>
-          <tbody>${dayTrades.map(tradeRowHTML).join('')}</tbody>
-        </table>
+      <div class="chart-card">
+        <div class="chart-title"><span class="dot blue"></span>TRAILING TP EFFICIENCY</div>
+        <div style="margin-top:8px">${trailHTML}</div>
+        ${avgCapture ? `<div style="margin-top:16px;font-family:var(--ff-mono);font-size:11px;color:var(--muted)">Average capture: <span style="color:var(--text)">${avgCapture.toFixed(1)}% of MFE</span></div>` : ''}
       </div>`;
+    main.appendChild(row3);
 
-    // Toggle expand on click
-    group.querySelector('.day-summary').addEventListener('click', () => {
-      const isOpen = group.classList.contains('expanded');
-      group.classList.toggle('expanded', !isOpen);
-      group.querySelector('.day-summary').classList.toggle('expanded', !isOpen);
+    // ── DAILY ACCORDION ───────────────────────────────────────────
+    const tradesByDay = {};
+    trades.forEach(t => {
+      const day = exitDate(t);
+      if (!tradesByDay[day]) tradesByDay[day] = [];
+      tradesByDay[day].push(t);
+    });
+    const sortedDays = Object.keys(tradesByDay).sort((a,b) => b.localeCompare(a));
+    const maxAbsDayPnL = Math.max(...sortedDays.map(d =>
+      Math.abs(tradesByDay[d].reduce((s,t) => s + (+t.realized_usd_net), 0))
+    ));
+
+    const accordionWrap = document.createElement('div');
+
+    const accHeader = document.createElement('div');
+    accHeader.style.cssText = 'background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 20px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;';
+    accHeader.innerHTML = `
+      <div class="chart-title" style="margin-bottom:0"><span class="dot"></span>DAILY P&amp;L — TRADE LOG</div>
+      <div class="table-count">${trades.length} trades · ${sortedDays.length} days · click a day to expand</div>`;
+    accordionWrap.appendChild(accHeader);
+
+    const colLabels = document.createElement('div');
+    colLabels.style.cssText = 'display:grid;grid-template-columns:160px 80px 100px 1fr 120px 30px;gap:12px;padding:4px 18px 6px;';
+    colLabels.innerHTML = `
+      <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">DATE</div>
+      <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">TRADES</div>
+      <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">W / L</div>
+      <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2)">DISTRIBUTION</div>
+      <div style="font-family:var(--ff-head);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted2);text-align:right">NET P&amp;L</div>
+      <div></div>`;
+    accordionWrap.appendChild(colLabels);
+
+    function tradeRowHTML(t) {
+      const net = +t.realized_usd_net;
+      const pts = +t.realized_points;
+      return `<tr>
+        <td>${fmtTimeCell(t.entry_time)}</td>
+        <td>${fmtTimeCell(t.exit_time)}</td>
+        <td class="${t.side==='LONG'?'side-long':'side-short'}">${t.side}</td>
+        <td><span class="pill ${t.strategy_mode==='TREND'?'pill-trend':'pill-range'}">${t.strategy_mode}</span></td>
+        <td><span class="${pillClass(t.exit_reason)}">${t.exit_reason||'—'}</span></td>
+        <td>${(+t.entry_price).toFixed(2)}</td>
+        <td>${(+t.exit_price).toFixed(2)}</td>
+        <td class="${pts>=0?'pnl-pos':'pnl-neg'}">${fmtPts(pts)}</td>
+        <td class="${net>=0?'pnl-pos':'pnl-neg'}">${fmtUSD(net)}</td>
+        <td style="color:var(--blue)">${(+t.mfe_points).toFixed(2)}</td>
+        <td style="color:var(--red)">${(+t.mae_points).toFixed(2)}</td>
+        <td>${t.bars_held}</td>
+      </tr>`;
+    }
+
+    sortedDays.forEach(day => {
+      const dayTrades = tradesByDay[day].slice().sort((a,b) => a.exit_time.localeCompare(b.exit_time));
+      const dayNet  = dayTrades.reduce((s,t) => s + (+t.realized_usd_net), 0);
+      const dayWins = dayTrades.filter(t => +t.realized_usd_net > 0).length;
+      const dayLoss = dayTrades.length - dayWins;
+      const barPct  = maxAbsDayPnL > 0 ? Math.abs(dayNet) / maxAbsDayPnL * 48 : 0;
+
+      const group = document.createElement('div');
+      group.className = 'day-group';
+
+      const dateObj     = new Date(day + 'T12:00:00Z');
+      const niceDateShort = dateObj.toLocaleDateString('en-US', { weekday:'short', month:'short', day:'numeric' });
+
+      group.innerHTML = `
+        <div class="day-summary">
+          <div class="day-date">${niceDateShort}</div>
+          <div class="day-count">${dayTrades.length} trade${dayTrades.length!==1?'s':''}</div>
+          <div class="day-wl">
+            <span class="w">${dayWins}W</span><span class="sep">/</span><span class="l">${dayLoss}L</span>
+          </div>
+          <div class="day-bar-wrap">
+            <div class="day-bar-track">
+              <div class="day-bar-center"></div>
+              <div class="day-bar-fill ${dayNet>=0?'pos':'neg'}" style="width:${barPct.toFixed(1)}%"></div>
+            </div>
+          </div>
+          <div class="day-pnl ${dayNet>=0?'pnl-pos':'pnl-neg'}">${fmtUSD(dayNet)}</div>
+          <div class="day-chevron">▼</div>
+        </div>
+        <div class="day-trades">
+          <table>
+            <thead>
+              <tr>
+                <th>ENTRY TIME</th>
+                <th>EXIT TIME</th>
+                <th>SIDE</th>
+                <th>MODE</th>
+                <th>EXIT REASON</th>
+                <th>ENTRY</th>
+                <th>EXIT</th>
+                <th>PTS</th>
+                <th>NET P&amp;L</th>
+                <th>MFE</th>
+                <th>MAE</th>
+                <th>BARS</th>
+              </tr>
+            </thead>
+            <tbody>${dayTrades.map(tradeRowHTML).join('')}</tbody>
+          </table>
+        </div>`;
+
+      group.querySelector('.day-summary').addEventListener('click', () => {
+        const isOpen = group.classList.contains('expanded');
+        group.classList.toggle('expanded', !isOpen);
+        group.querySelector('.day-summary').classList.toggle('expanded', !isOpen);
+      });
+
+      accordionWrap.appendChild(group);
     });
 
-    accordionWrap.appendChild(group);
-  });
+    main.appendChild(accordionWrap);
 
-  main.appendChild(accordionWrap);
+    // ── DRAW CHARTS ───────────────────────────────────────────────
+    const gridColor = '#21262d';
 
-  // ── DRAW CHARTS ──────────────────────────────────────────────────
-  const gridColor = '#21262d';
-
-  // Cumulative P&L
-  charts.push(new Chart($('cumChart'), {
-    type: 'line',
-    data: {
-      labels: trades.slice().sort((a,b)=>a.exit_time.localeCompare(b.exit_time)).map((_,i) => i+1),
-      datasets: [{
-        data: cumPnL,
-        borderColor: totalNet >= 0 ? '#3fb950' : '#f85149',
-        backgroundColor: ctx => {
-          const g = ctx.chart.ctx.createLinearGradient(0,0,0,280);
-          g.addColorStop(0, totalNet>=0 ? 'rgba(63,185,80,.25)' : 'rgba(248,81,73,.25)');
-          g.addColorStop(1, 'rgba(0,0,0,0)');
-          return g;
-        },
-        fill: true,
-        tension: .35,
-        pointRadius: cumPnL.length <= 30 ? 4 : 0,
-        pointHoverRadius: 5,
-        borderWidth: 2,
-        pointBackgroundColor: totalNet>=0 ? '#3fb950' : '#f85149',
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#161b22',
-          borderColor: '#30363d',
-          borderWidth: 1,
-          callbacks: {
-            label: ctx => ' Net P&L: ' + fmtUSD(ctx.parsed.y)
+    // Cumulative P&L
+    charts.push(new Chart($('cumChart'), {
+      type: 'line',
+      data: {
+        labels: trades.slice().sort((a,b)=>a.exit_time.localeCompare(b.exit_time)).map((_,i) => i+1),
+        datasets: [{
+          data: cumPnL,
+          borderColor: totalNet >= 0 ? '#3fb950' : '#f85149',
+          backgroundColor: ctx => {
+            const g = ctx.chart.ctx.createLinearGradient(0,0,0,280);
+            g.addColorStop(0, totalNet>=0 ? 'rgba(63,185,80,.25)' : 'rgba(248,81,73,.25)');
+            g.addColorStop(1, 'rgba(0,0,0,0)');
+            return g;
+          },
+          fill: true, tension: .35,
+          pointRadius: cumPnL.length <= 30 ? 4 : 0,
+          pointHoverRadius: 5, borderWidth: 2,
+          pointBackgroundColor: totalNet>=0 ? '#3fb950' : '#f85149',
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+            callbacks: { label: ctx => ' Net P&L: ' + fmtUSD(ctx.parsed.y) }
           }
-        }
-      },
-      scales: {
-        x: { grid: { color: gridColor }, ticks: { maxTicksLimit: 12 } },
-        y: {
-          grid: { color: gridColor },
-          ticks: { callback: v => '$' + v.toFixed(0) }
+        },
+        scales: {
+          x: { grid: { color: gridColor }, ticks: { maxTicksLimit: 12 } },
+          y: { grid: { color: gridColor }, ticks: { callback: v => '$' + v.toFixed(0) } }
         }
       }
-    }
-  }));
+    }));
 
-  // Daily P&L
-  charts.push(new Chart($('dailyChart'), {
-    type: 'bar',
-    data: {
-      labels: days,
-      datasets: [{
-        data: dayPnL,
-        backgroundColor: dayPnL.map(v => v >= 0 ? 'rgba(63,185,80,.7)' : 'rgba(248,81,73,.7)'),
-        borderColor:      dayPnL.map(v => v >= 0 ? '#3fb950' : '#f85149'),
-        borderWidth: 1,
-        borderRadius: 4,
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
-          callbacks: { label: ctx => ' ' + fmtUSD(ctx.parsed.y) }
-        }
+    // Daily P&L
+    charts.push(new Chart($('dailyChart'), {
+      type: 'bar',
+      data: {
+        labels: days,
+        datasets: [{
+          data: dayPnL,
+          backgroundColor: dayPnL.map(v => v >= 0 ? 'rgba(63,185,80,.7)' : 'rgba(248,81,73,.7)'),
+          borderColor:      dayPnL.map(v => v >= 0 ? '#3fb950' : '#f85149'),
+          borderWidth: 1, borderRadius: 4,
+        }]
       },
-      scales: {
-        x: { grid: { color: gridColor } },
-        y: { grid: { color: gridColor }, ticks: { callback: v => '$' + v.toFixed(0) } }
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+            callbacks: { label: ctx => ' ' + fmtUSD(ctx.parsed.y) }
+          }
+        },
+        scales: {
+          x: { grid: { color: gridColor } },
+          y: { grid: { color: gridColor }, ticks: { callback: v => '$' + v.toFixed(0) } }
+        }
       }
-    }
-  }));
+    }));
 
-  // Daily win rate chart
-  const dayWinRates = days.map(d => {
-    const dt = trades.filter(t => t.exit_time.slice(0,10) === d);
-    const w  = dt.filter(t => +t.realized_usd_net > 0).length;
-    return +(w / dt.length * 100).toFixed(1);
-  });
+    // Daily win rate
+    const dayWinRates = days.map(d => {
+      const dt = trades.filter(t => exitDate(t) === d);
+      return +(dt.filter(t => +t.realized_usd_net > 0).length / dt.length * 100).toFixed(1);
+    });
 
-  charts.push(new Chart($('dailyWinRateChart'), {
-    type: 'bar',
-    data: {
-      labels: days,
-      datasets: [{
-        data: dayWinRates,
-        backgroundColor: dayWinRates.map(v => v >= 50 ? 'rgba(63,185,80,.7)' : 'rgba(248,81,73,.7)'),
-        borderColor:      dayWinRates.map(v => v >= 50 ? '#3fb950' : '#f85149'),
-        borderWidth: 1,
-        borderRadius: 4,
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
-          callbacks: {
-            label: ctx => {
-              const d   = days[ctx.dataIndex];
-              const dt  = trades.filter(t => t.exit_time.slice(0,10) === d);
-              const w   = dt.filter(t => +t.realized_usd_net > 0).length;
-              return ` ${ctx.parsed.y}%  (${w}W / ${dt.length - w}L of ${dt.length})`;
+    charts.push(new Chart($('dailyWinRateChart'), {
+      type: 'bar',
+      data: {
+        labels: days,
+        datasets: [{
+          data: dayWinRates,
+          backgroundColor: dayWinRates.map(v => v >= 50 ? 'rgba(63,185,80,.7)' : 'rgba(248,81,73,.7)'),
+          borderColor:      dayWinRates.map(v => v >= 50 ? '#3fb950' : '#f85149'),
+          borderWidth: 1, borderRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+            callbacks: {
+              label: ctx => {
+                const d  = days[ctx.dataIndex];
+                const dt = trades.filter(t => exitDate(t) === d);
+                const w  = dt.filter(t => +t.realized_usd_net > 0).length;
+                return ` ${ctx.parsed.y}%  (${w}W / ${dt.length - w}L of ${dt.length})`;
+              }
             }
           }
         },
-        annotation: {
-          annotations: {
-            line50: {
-              type: 'line', yMin: 50, yMax: 50,
-              borderColor: 'rgba(255,255,255,.25)', borderWidth: 1, borderDash: [4, 4],
-              label: { content: '50%', display: true, position: 'end',
-                backgroundColor: 'transparent', color: 'rgba(255,255,255,.4)', font: { size: 10 } }
-            }
+        scales: {
+          x: { grid: { color: gridColor } },
+          y: { grid: { color: gridColor }, min: 0, max: 100, ticks: { callback: v => v + '%', stepSize: 25 } }
+        }
+      }
+    }));
+
+    // Win/Loss donut
+    charts.push(new Chart($('donutChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['Wins', 'Losses'],
+        datasets: [{
+          data: [wins.length, losses.length],
+          backgroundColor: ['rgba(63,185,80,.8)', 'rgba(248,81,73,.7)'],
+          borderColor: ['#3fb950','#f85149'],
+          borderWidth: 1.5, hoverOffset: 6,
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: true, cutout: '65%',
+        plugins: {
+          legend: { position: 'bottom', labels: { padding: 16, boxWidth: 10 } },
+          tooltip: {
+            backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
+            callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + ' (' + (ctx.parsed/trades.length*100).toFixed(0) + '%)' }
           }
         }
+      }
+    }));
+
+    // Exit reason chart
+    const reasons = Object.keys(byReason);
+    charts.push(new Chart($('reasonChart'), {
+      type: 'bar',
+      data: {
+        labels: reasons,
+        datasets: [
+          {
+            label: 'Count',
+            data: reasons.map(r => byReason[r].count),
+            backgroundColor: 'rgba(88,166,255,.6)',
+            borderColor: '#58a6ff',
+            borderWidth: 1, borderRadius: 4,
+            yAxisID: 'y',
+          },
+          {
+            label: 'Net P&L ($)',
+            data: reasons.map(r => +byReason[r].pnl.toFixed(2)),
+            backgroundColor: reasons.map(r => byReason[r].pnl >= 0 ? 'rgba(63,185,80,.5)' : 'rgba(248,81,73,.5)'),
+            borderColor:     reasons.map(r => byReason[r].pnl >= 0 ? '#3fb950' : '#f85149'),
+            borderWidth: 1, borderRadius: 4,
+            yAxisID: 'y2', type: 'line', pointRadius: 5, tension: 0,
+          }
+        ]
       },
-      scales: {
-        x: { grid: { color: gridColor } },
-        y: {
-          grid: { color: gridColor },
-          min: 0, max: 100,
-          ticks: { callback: v => v + '%', stepSize: 25 }
-        }
-      }
-    }
-  }));
-
-  // Win/Loss donut
-  charts.push(new Chart($('donutChart'), {
-    type: 'doughnut',
-    data: {
-      labels: ['Wins', 'Losses'],
-      datasets: [{
-        data: [wins.length, losses.length],
-        backgroundColor: ['rgba(63,185,80,.8)', 'rgba(248,81,73,.7)'],
-        borderColor: ['#3fb950','#f85149'],
-        borderWidth: 1.5,
-        hoverOffset: 6,
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      cutout: '65%',
-      plugins: {
-        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 10 } },
-        tooltip: {
-          backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1,
-          callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + ' (' + (ctx.parsed/trades.length*100).toFixed(0) + '%)' }
-        }
-      }
-    }
-  }));
-
-  // Exit reason chart
-  const reasons = Object.keys(byReason);
-  charts.push(new Chart($('reasonChart'), {
-    type: 'bar',
-    data: {
-      labels: reasons,
-      datasets: [
-        {
-          label: 'Count',
-          data: reasons.map(r => byReason[r].count),
-          backgroundColor: 'rgba(88,166,255,.6)',
-          borderColor: '#58a6ff',
-          borderWidth: 1,
-          borderRadius: 4,
-          yAxisID: 'y',
+      options: {
+        responsive: true, maintainAspectRatio: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { padding: 16, boxWidth: 10 } },
+          tooltip: { backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1 }
         },
-        {
-          label: 'Net P&L ($)',
-          data: reasons.map(r => +byReason[r].pnl.toFixed(2)),
-          backgroundColor: reasons.map(r => byReason[r].pnl >= 0 ? 'rgba(63,185,80,.5)' : 'rgba(248,81,73,.5)'),
-          borderColor: reasons.map(r => byReason[r].pnl >= 0 ? '#3fb950' : '#f85149'),
-          borderWidth: 1,
-          borderRadius: 4,
-          yAxisID: 'y2',
-          type: 'line',
-          pointRadius: 5,
-          tension: 0,
+        scales: {
+          x: { grid: { color: gridColor } },
+          y:  { grid: { color: gridColor }, position: 'left',  ticks: { stepSize: 1 } },
+          y2: { grid: { display: false },   position: 'right', ticks: { callback: v => '$' + v.toFixed(0) } }
         }
-      ]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: true,
-      plugins: {
-        legend: { position: 'bottom', labels: { padding: 16, boxWidth: 10 } },
-        tooltip: { backgroundColor: '#161b22', borderColor: '#30363d', borderWidth: 1 }
-      },
-      scales: {
-        x: { grid: { color: gridColor } },
-        y: { grid: { color: gridColor }, position: 'left', ticks: { stepSize: 1 } },
-        y2: { grid: { display: false }, position: 'right', ticks: { callback: v => '$' + v.toFixed(0) } }
       }
-    }
-  }));
+    }));
 
-  // ── TRAIL EFFICIENCY BARS ────────────────────────────────────────
   } // end renderDashboard
 
   function buildTrailEfficiency(tTrades) {
     if (!tTrades.length) return '';
-    // Group by trade index, show individual captures
-    const items = tTrades.map((t, i) => {
-      const cap = clamp(+t.realized_points / +t.mfe_points * 100, 0, 100);
-      const label = fmtDate(t.exit_time).slice(5, 16);
+    const items = tTrades.map(t => {
+      const cap   = clamp(+t.realized_points / +t.mfe_points * 100, 0, 100);
+      const d     = parseTime(t.exit_time);
+      const label = d ? d.toISOString().slice(5, 16).replace('T', ' ') : t.exit_time.slice(5, 16);
       return `<div class="eff-row">
         <div class="eff-label">${label}</div>
         <div class="eff-track"><div class="eff-fill" style="width:${cap.toFixed(0)}%"></div></div>
