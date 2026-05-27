@@ -703,12 +703,17 @@
       byReason[r].pnl += +t.realized_usd_net;
     });
 
-    // Trail efficiency
-    const trailTrades = trades.filter(t =>
-      t.exit_reason && t.exit_reason.includes('trail') && +t.mfe_points > 0
-    );
-    const avgCapture = trailTrades.length
-      ? trailTrades.reduce((s,t) => s + clamp(+t.realized_points / +t.mfe_points, 0, 1), 0) / trailTrades.length * 100
+    // MFE Recovery — all profitable trades with mfe_points > 0
+    const mfeTrades = trades.filter(t => +t.realized_points > 0 && +t.mfe_points > 0);
+    const avgMfeRecovery = mfeTrades.length
+      ? mfeTrades.reduce((s,t) => s + clamp(+t.realized_points / +t.mfe_points, 0, 1), 0) / mfeTrades.length * 100
+      : null;
+
+    // Rolling 10-trade MFE recovery (most recent 10 profitable trades by exit_time)
+    const mfeTradesSorted = mfeTrades.slice().sort((a,b) => a.exit_time.localeCompare(b.exit_time));
+    const rolling10 = mfeTradesSorted.slice(-10);
+    const rolling10Avg = rolling10.length >= 2
+      ? rolling10.reduce((s,t) => s + clamp(+t.realized_points / +t.mfe_points, 0, 1), 0) / rolling10.length * 100
       : null;
 
     // Daily win rates
@@ -775,21 +780,44 @@
     </div>`;
     main.appendChild(row2b);
 
-    // ── EXIT REASON + TRAIL EFFICIENCY ────────────────────────────
+    // ── EXIT REASON + MFE RECOVERY ───────────────────────────────
     const row3 = document.createElement('div');
     row3.className = 'charts-row split-2';
-    const trailHTML = trailTrades.length
-      ? buildTrailEfficiency(trailTrades)
-      : '<p style="color:var(--muted);font-size:12px">No trailing TP trades yet.</p>';
+    const mfeHTML = mfeTrades.length
+      ? buildMfeRecovery(mfeTradesSorted)
+      : '<p style="color:var(--muted);font-size:12px">No profitable trades yet.</p>';
+
+    // Trend arrow: rolling10 vs overall
+    let trendBadge = '';
+    if (avgMfeRecovery !== null && rolling10Avg !== null && rolling10.length < mfeTrades.length) {
+      const diff = rolling10Avg - avgMfeRecovery;
+      const arrow = diff >= 0 ? '▲' : '▼';
+      const col   = diff >= 0 ? 'var(--green)' : 'var(--red)';
+      trendBadge = `<span style="color:${col};margin-left:8px">${arrow} ${Math.abs(diff).toFixed(1)}% vs overall</span>`;
+    }
+
     row3.innerHTML = `
       <div class="chart-card">
         <div class="chart-title"><span class="dot purple"></span>EXIT REASON BREAKDOWN</div>
         <div class="chart-wrap"><canvas id="reasonChart"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title"><span class="dot blue"></span>TRAILING TP EFFICIENCY</div>
-        <div style="margin-top:8px">${trailHTML}</div>
-        ${avgCapture ? `<div style="margin-top:16px;font-family:var(--ff-mono);font-size:11px;color:var(--muted)">Average capture: <span style="color:var(--text)">${avgCapture.toFixed(1)}% of MFE</span></div>` : ''}
+        <div class="chart-title"><span class="dot blue"></span>MFE RECOVERY — PROFITABLE TRADES</div>
+        ${avgMfeRecovery !== null ? `
+        <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:16px;flex-wrap:wrap">
+          <div>
+            <div style="font-family:var(--ff-mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px">OVERALL AVG</div>
+            <div style="font-family:var(--ff-mono);font-size:22px;font-weight:600;color:var(--text)">${avgMfeRecovery.toFixed(1)}%</div>
+            <div style="font-family:var(--ff-mono);font-size:10px;color:var(--muted);margin-top:2px">${mfeTrades.length} profitable trade${mfeTrades.length!==1?'s':''}</div>
+          </div>
+          ${rolling10Avg !== null ? `
+          <div>
+            <div style="font-family:var(--ff-mono);font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px">LAST 10 AVG${trendBadge}</div>
+            <div style="font-family:var(--ff-mono);font-size:22px;font-weight:600;color:var(--blue)">${rolling10Avg.toFixed(1)}%</div>
+            <div style="font-family:var(--ff-mono);font-size:10px;color:var(--muted);margin-top:2px">${rolling10.length} trades</div>
+          </div>` : ''}
+        </div>` : ''}
+        <div style="margin-top:4px">${mfeHTML}</div>
       </div>`;
     main.appendChild(row3);
 
@@ -828,6 +856,13 @@
     function tradeRowHTML(t) {
       const net = +t.realized_usd_net;
       const pts = +t.realized_points;
+      const mfe = +t.mfe_points;
+      const mfeRecovery = (pts > 0 && mfe > 0)
+        ? clamp(pts / mfe * 100, 0, 100)
+        : null;
+      const mfeRecCell = mfeRecovery !== null
+        ? `<span style="color:${mfeRecovery>=70?'var(--green)':mfeRecovery>=40?'var(--blue)':'var(--orange)'}">${mfeRecovery.toFixed(0)}%</span>`
+        : `<span style="color:var(--muted2)">—</span>`;
       return `<tr>
         <td>${fmtTimeCell(t.entry_time)}</td>
         <td>${fmtTimeCell(t.exit_time)}</td>
@@ -838,8 +873,9 @@
         <td>${(+t.exit_price).toFixed(2)}</td>
         <td class="${pts>=0?'pnl-pos':'pnl-neg'}">${fmtPts(pts)}</td>
         <td class="${net>=0?'pnl-pos':'pnl-neg'}">${fmtUSD(net)}</td>
-        <td style="color:var(--blue)">${(+t.mfe_points).toFixed(2)}</td>
+        <td style="color:var(--blue)">${mfe.toFixed(2)}</td>
         <td style="color:var(--red)">${(+t.mae_points).toFixed(2)}</td>
+        <td>${mfeRecCell}</td>
         <td>${t.bars_held}</td>
       </tr>`;
     }
@@ -888,6 +924,7 @@
                 <th>NET P&amp;L</th>
                 <th>MFE</th>
                 <th>MAE</th>
+                <th>MFE%</th>
                 <th>BARS</th>
               </tr>
             </thead>
@@ -1078,16 +1115,20 @@
 
   } // end renderDashboard
 
-  function buildTrailEfficiency(tTrades) {
-    if (!tTrades.length) return '';
-    const items = tTrades.map(t => {
-      const cap   = clamp(+t.realized_points / +t.mfe_points * 100, 0, 100);
-      const d     = parseTime(t.exit_time);
-      const label = d ? d.toISOString().slice(5, 16).replace('T', ' ') : t.exit_time.slice(5, 16);
-      return `<div class="eff-row">
+  function buildMfeRecovery(profitableTrades) {
+    if (!profitableTrades.length) return '';
+    // Show most recent 12, newest at top
+    const items = profitableTrades.slice(-12).reverse().map(t => {
+      const recovery = clamp(+t.realized_points / +t.mfe_points * 100, 0, 100);
+      const d        = parseTime(t.exit_time);
+      const label    = d ? d.toISOString().slice(5, 16).replace('T', ' ') : t.exit_time.slice(5, 16);
+      const reason   = t.exit_reason || '—';
+      const col      = recovery >= 70 ? 'var(--green)' : recovery >= 40 ? 'var(--blue)' : 'var(--orange)';
+      return `<div class="eff-row" style="grid-template-columns:110px 1fr 55px 90px">
         <div class="eff-label">${label}</div>
-        <div class="eff-track"><div class="eff-fill" style="width:${cap.toFixed(0)}%"></div></div>
-        <div class="eff-pct">${cap.toFixed(0)}%</div>
+        <div class="eff-track"><div class="eff-fill" style="width:${recovery.toFixed(0)}%;background:linear-gradient(90deg,${col},${col})"></div></div>
+        <div class="eff-pct">${recovery.toFixed(0)}%</div>
+        <div style="font-family:var(--ff-mono);font-size:9px;color:var(--muted);text-align:right;white-space:nowrap">${reason}</div>
       </div>`;
     });
     return `<div class="efficiency-bars">${items.join('')}</div>`;
