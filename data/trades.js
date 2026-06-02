@@ -2885,4 +2885,4 @@ window.TRADES_DATA = [
   }
 ];
 
-window.LAST_UPDATED = "2026-06-01 22:54:07";
+window.LAST_UPDATED = "2026-06-02 09:07:15";
