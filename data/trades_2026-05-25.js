@@ -21,6 +21,8 @@ window.TRADES_DAYS["2026-05-25"] = [
     "mae_usd": "137.0",
     "bars_held": "106",
     "atr_at_entry": "",
+    "macd_at_entry": "",
+    "adx_at_entry": "",
     "post_exit_bar1": "",
     "post_exit_bar2": "",
     "post_exit_bar3": "",
