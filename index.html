@@ -431,6 +431,14 @@
       <button class="filter-btn" id="exitNoneBtn">NONE</button>
     </div>
   </div>
+  <div class="filter-row">
+    <span class="filter-label">REGIME</span>
+    <div class="exit-reason-filter-wrap" id="regimeFilter"></div>
+    <div class="exit-filter-btns">
+      <button class="filter-btn" id="regimeAllBtn">ALL</button>
+      <button class="filter-btn" id="regimeNoneBtn">NONE</button>
+    </div>
+  </div>
 </div>
 
 <div class="main" id="main">
@@ -620,6 +628,59 @@
 
   renderExitReasonCheckboxes();
 
+  // ── REGIME FILTER ────────────────────────────────────────────────
+  const allRegimes = [...new Set(allTrades.map(t => t.strategy_mode || 'UNKNOWN'))].sort();
+  let activeRegimes = new Set(allRegimes);
+
+  function regimePillClass(mode) {
+    if (mode === 'TREND') return 'pill pill-trend';
+    if (mode === 'RANGE') return 'pill pill-range';
+    return 'pill';
+  }
+
+  function renderRegimeCheckboxes() {
+    const container = $('regimeFilter');
+    container.innerHTML = '';
+    allRegimes.forEach(r => {
+      const label = document.createElement('label');
+      label.className = 'exit-cb-label' + (activeRegimes.has(r) ? ' checked' : '');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = r;
+      cb.checked = activeRegimes.has(r);
+      cb.addEventListener('change', () => {
+        if (cb.checked) {
+          activeRegimes.add(r);
+          label.classList.add('checked');
+        } else {
+          activeRegimes.delete(r);
+          label.classList.remove('checked');
+        }
+        renderDashboard();
+      });
+      const pill = document.createElement('span');
+      pill.className = regimePillClass(r);
+      pill.textContent = r;
+      label.appendChild(cb);
+      label.appendChild(pill);
+      container.appendChild(label);
+    });
+  }
+
+  $('regimeAllBtn').addEventListener('click', () => {
+    activeRegimes = new Set(allRegimes);
+    renderRegimeCheckboxes();
+    renderDashboard();
+  });
+
+  $('regimeNoneBtn').addEventListener('click', () => {
+    activeRegimes = new Set();
+    renderRegimeCheckboxes();
+    renderDashboard();
+  });
+
+  renderRegimeCheckboxes();
+
   // ── COMBINED FILTER ──────────────────────────────────────────────
   function getFilteredTrades() {
     const fromVal = $('filterFrom').value;
@@ -635,6 +696,10 @@
       // Exit reason filter
       if (activeExitReasons.size < allExitReasons.length) {
         if (!activeExitReasons.has(t.exit_reason || 'unknown')) return false;
+      }
+      // Regime filter
+      if (activeRegimes.size < allRegimes.length) {
+        if (!activeRegimes.has(t.strategy_mode || 'UNKNOWN')) return false;
       }
       return true;
     });
