@@ -20,14 +20,14 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "264.0",
     "mae_usd": "0.0",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "54.4183",
     "macd_at_entry": "49.5334",
     "adx_at_entry": "28.4095",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29015.0",
+    "post_exit_bar2": "29019.5",
+    "post_exit_bar3": "29039.25",
+    "post_exit_high3": "29048.75",
+    "post_exit_low3": "29000.0"
   },
   {
     "exit_time": "2026-06-11T14:37:14Z",
@@ -46,14 +46,14 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "50.5",
     "mae_usd": "3.0",
     "bars_held": "0",
-    "atr_at_entry": "",
+    "atr_at_entry": "56.1121",
     "macd_at_entry": "-11.2384",
     "adx_at_entry": "13.2325",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "28841.75",
+    "post_exit_bar2": "28891.25",
+    "post_exit_bar3": "28871.0",
+    "post_exit_high3": "28942.0",
+    "post_exit_low3": "28836.0"
   },
   {
     "exit_time": "2026-06-11T15:30:38Z",
@@ -72,14 +72,14 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "0.0",
     "mae_usd": "32.5",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "45.9302",
     "macd_at_entry": "18.8643",
     "adx_at_entry": "17.0761",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "28773.0",
+    "post_exit_bar2": "28799.0",
+    "post_exit_bar3": "28785.75",
+    "post_exit_high3": "28814.5",
+    "post_exit_low3": "28740.75"
   },
   {
     "exit_time": "2026-06-11T17:25:37Z",
@@ -98,14 +98,14 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "2.5",
     "mae_usd": "38.0",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "32.624",
     "macd_at_entry": "-26.5873",
     "adx_at_entry": "33.3776",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "28760.5",
+    "post_exit_bar2": "28787.0",
+    "post_exit_bar3": "28911.75",
+    "post_exit_high3": "28980.0",
+    "post_exit_low3": "28753.25"
   },
   {
     "exit_time": "2026-06-11T18:58:56Z",
@@ -124,14 +124,14 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "51.5",
     "mae_usd": "30.5",
     "bars_held": "3",
-    "atr_at_entry": "",
+    "atr_at_entry": "26.884",
     "macd_at_entry": "23.1297",
     "adx_at_entry": "29.2837",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29268.75",
+    "post_exit_bar2": "29295.5",
+    "post_exit_bar3": "29304.25",
+    "post_exit_high3": "29320.0",
+    "post_exit_low3": "29255.25"
   },
   {
     "exit_time": "2026-06-11T19:05:51Z",
@@ -150,14 +150,14 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "7.5",
     "mae_usd": "25.0",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "27.1185",
     "macd_at_entry": "20.1873",
     "adx_at_entry": "30.1221",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29244.0",
+    "post_exit_bar2": "29274.0",
+    "post_exit_bar3": "29276.0",
+    "post_exit_high3": "29284.25",
+    "post_exit_low3": "29229.25"
   },
   {
     "exit_time": "2026-06-11T19:06:26Z",
@@ -176,13 +176,13 @@ window.TRADES_DAYS["2026-06-11"] = [
     "mfe_usd": "0.0",
     "mae_usd": "17.5",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "28.4493",
     "macd_at_entry": "20.2171",
     "adx_at_entry": "30.4661",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29274.0",
+    "post_exit_bar2": "29276.0",
+    "post_exit_bar3": "29304.25",
+    "post_exit_high3": "29308.25",
+    "post_exit_low3": "29236.0"
   }
 ];

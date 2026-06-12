@@ -20,14 +20,14 @@ window.TRADES_DAYS["2026-06-09"] = [
     "mfe_usd": "48.0",
     "mae_usd": "0.0",
     "bars_held": "0",
-    "atr_at_entry": "",
+    "atr_at_entry": "35.2726",
     "macd_at_entry": "-16.4352",
     "adx_at_entry": "25.1068",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29657.5",
+    "post_exit_bar2": "29671.75",
+    "post_exit_bar3": "29632.0",
+    "post_exit_high3": "29685.75",
+    "post_exit_low3": "29624.0"
   },
   {
     "exit_time": "2026-06-09T14:11:20Z",
@@ -46,14 +46,14 @@ window.TRADES_DAYS["2026-06-09"] = [
     "mfe_usd": "204.0",
     "mae_usd": "0.0",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "36.716",
     "macd_at_entry": "-19.6349",
     "adx_at_entry": "25.5339",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29550.5",
+    "post_exit_bar2": "29554.25",
+    "post_exit_bar3": "29502.25",
+    "post_exit_high3": "29578.5",
+    "post_exit_low3": "29495.25"
   },
   {
     "exit_time": "2026-06-09T18:14:36Z",
@@ -72,14 +72,14 @@ window.TRADES_DAYS["2026-06-09"] = [
     "mfe_usd": "18.0",
     "mae_usd": "36.0",
     "bars_held": "2",
-    "atr_at_entry": "",
+    "atr_at_entry": "39.3288",
     "macd_at_entry": "16.1781",
     "adx_at_entry": "12.6858",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "28861.5",
+    "post_exit_bar2": "28834.0",
+    "post_exit_bar3": "28853.5",
+    "post_exit_high3": "28882.5",
+    "post_exit_low3": "28822.0"
   },
   {
     "exit_time": "2026-06-09T18:56:42Z",
@@ -98,13 +98,13 @@ window.TRADES_DAYS["2026-06-09"] = [
     "mfe_usd": "1.0",
     "mae_usd": "29.0",
     "bars_held": "1",
-    "atr_at_entry": "",
+    "atr_at_entry": "34.9662",
     "macd_at_entry": "10.2645",
     "adx_at_entry": "14.4791",
-    "post_exit_bar1": "",
-    "post_exit_bar2": "",
-    "post_exit_bar3": "",
-    "post_exit_high3": "",
-    "post_exit_low3": ""
+    "post_exit_bar1": "29057.75",
+    "post_exit_bar2": "29077.5",
+    "post_exit_bar3": "29066.5",
+    "post_exit_high3": "29091.25",
+    "post_exit_low3": "29031.75"
   }
 ];
