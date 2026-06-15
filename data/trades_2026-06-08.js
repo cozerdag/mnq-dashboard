@@ -27,7 +27,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29457.25",
     "post_exit_bar3": "29379.0",
     "post_exit_high3": "29504.5",
-    "post_exit_low3": "29377.0"
+    "post_exit_low3": "29377.0",
+    "ker20_at_entry": "0.1927"
   },
   {
     "exit_time": "2026-06-08T14:10:03Z",
@@ -53,7 +54,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29459.0",
     "post_exit_bar3": "29435.0",
     "post_exit_high3": "29466.5",
-    "post_exit_low3": "29420.0"
+    "post_exit_low3": "29420.0",
+    "ker20_at_entry": "-0.0434"
   },
   {
     "exit_time": "2026-06-08T17:12:41Z",
@@ -79,7 +81,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29531.25",
     "post_exit_bar3": "29512.5",
     "post_exit_high3": "29540.75",
-    "post_exit_low3": "29499.25"
+    "post_exit_low3": "29499.25",
+    "ker20_at_entry": "-0.3756"
   },
   {
     "exit_time": "2026-06-08T17:19:19Z",
@@ -105,7 +108,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29512.25",
     "post_exit_bar3": "29522.0",
     "post_exit_high3": "29533.75",
-    "post_exit_low3": "29497.25"
+    "post_exit_low3": "29497.25",
+    "ker20_at_entry": "-0.276"
   },
   {
     "exit_time": "2026-06-08T17:42:32Z",
@@ -131,7 +135,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29512.0",
     "post_exit_bar3": "29529.0",
     "post_exit_high3": "29535.75",
-    "post_exit_low3": "29509.25"
+    "post_exit_low3": "29509.25",
+    "ker20_at_entry": "0.1055"
   },
   {
     "exit_time": "2026-06-08T18:01:26Z",
@@ -157,7 +162,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29577.25",
     "post_exit_bar3": "29577.75",
     "post_exit_high3": "29596.0",
-    "post_exit_low3": "29568.25"
+    "post_exit_low3": "29568.25",
+    "ker20_at_entry": "-0.0157"
   },
   {
     "exit_time": "2026-06-08T18:19:20Z",
@@ -183,7 +189,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29575.25",
     "post_exit_bar3": "29582.0",
     "post_exit_high3": "29589.5",
-    "post_exit_low3": "29557.75"
+    "post_exit_low3": "29557.75",
+    "ker20_at_entry": "-0.0808"
   },
   {
     "exit_time": "2026-06-08T18:29:08Z",
@@ -209,7 +216,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29610.75",
     "post_exit_bar3": "29604.75",
     "post_exit_high3": "29615.5",
-    "post_exit_low3": "29589.25"
+    "post_exit_low3": "29589.25",
+    "ker20_at_entry": "0.0167"
   },
   {
     "exit_time": "2026-06-08T18:39:00Z",
@@ -235,7 +243,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29536.0",
     "post_exit_bar3": "29533.0",
     "post_exit_high3": "29573.5",
-    "post_exit_low3": "29527.75"
+    "post_exit_low3": "29527.75",
+    "ker20_at_entry": "-0.0535"
   },
   {
     "exit_time": "2026-06-08T18:58:16Z",
@@ -261,7 +270,8 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29540.5",
     "post_exit_bar3": "29521.0",
     "post_exit_high3": "29548.25",
-    "post_exit_low3": "29512.75"
+    "post_exit_low3": "29512.75",
+    "ker20_at_entry": "-0.216"
   },
   {
     "exit_time": "2026-06-08T19:24:24Z",
@@ -287,6 +297,7 @@ window.TRADES_DAYS["2026-06-08"] = [
     "post_exit_bar2": "29380.5",
     "post_exit_bar3": "29399.25",
     "post_exit_high3": "29408.0",
-    "post_exit_low3": "29377.0"
+    "post_exit_low3": "29377.0",
+    "ker20_at_entry": "-0.3514"
   }
 ];

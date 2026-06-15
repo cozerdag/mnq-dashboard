@@ -27,7 +27,8 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "29019.5",
     "post_exit_bar3": "29039.25",
     "post_exit_high3": "29048.75",
-    "post_exit_low3": "29000.0"
+    "post_exit_low3": "29000.0",
+    "ker20_at_entry": "0.3758"
   },
   {
     "exit_time": "2026-06-11T14:37:14Z",
@@ -53,7 +54,8 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "28891.25",
     "post_exit_bar3": "28871.0",
     "post_exit_high3": "28942.0",
-    "post_exit_low3": "28836.0"
+    "post_exit_low3": "28836.0",
+    "ker20_at_entry": "0.2494"
   },
   {
     "exit_time": "2026-06-11T15:30:38Z",
@@ -79,7 +81,8 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "28799.0",
     "post_exit_bar3": "28785.75",
     "post_exit_high3": "28814.5",
-    "post_exit_low3": "28740.75"
+    "post_exit_low3": "28740.75",
+    "ker20_at_entry": "0.0755"
   },
   {
     "exit_time": "2026-06-11T17:25:37Z",
@@ -105,7 +108,8 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "28787.0",
     "post_exit_bar3": "28911.75",
     "post_exit_high3": "28980.0",
-    "post_exit_low3": "28753.25"
+    "post_exit_low3": "28753.25",
+    "ker20_at_entry": "-0.0078"
   },
   {
     "exit_time": "2026-06-11T18:58:56Z",
@@ -131,7 +135,8 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "29295.5",
     "post_exit_bar3": "29304.25",
     "post_exit_high3": "29320.0",
-    "post_exit_low3": "29255.25"
+    "post_exit_low3": "29255.25",
+    "ker20_at_entry": "0.2066"
   },
   {
     "exit_time": "2026-06-11T19:05:51Z",
@@ -157,7 +162,8 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "29274.0",
     "post_exit_bar3": "29276.0",
     "post_exit_high3": "29284.25",
-    "post_exit_low3": "29229.25"
+    "post_exit_low3": "29229.25",
+    "ker20_at_entry": "0.2765"
   },
   {
     "exit_time": "2026-06-11T19:06:26Z",
@@ -183,6 +189,7 @@ window.TRADES_DAYS["2026-06-11"] = [
     "post_exit_bar2": "29276.0",
     "post_exit_bar3": "29304.25",
     "post_exit_high3": "29308.25",
-    "post_exit_low3": "29236.0"
+    "post_exit_low3": "29236.0",
+    "ker20_at_entry": "0.0925"
   }
 ];
